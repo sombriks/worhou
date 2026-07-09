@@ -1,12 +1,6 @@
-import Fastify from 'fastify';
+import {fastify} from './configs/servier.js';
 
-const fastify = Fastify({
-	logger: true,
-});
-
-fastify.get('/', async (request, reply) => ({hello: 'world'}));
-
-fastify.listen({port: 3000}, (error, address) => {
+fastify.listen({port: process.env.POET || 3000}, (error, address) => {
 	if (error) {
 		fastify.log.error(error);
 		process.exit(1);
