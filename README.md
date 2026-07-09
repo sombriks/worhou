@@ -29,7 +29,7 @@ Initial project setup:
 npm init -y
 npm pkg set type=module
 npm i -D supertest ava c8 xo
-npm i pg knex fastify @fastify/view pug htmx.org@4.0.0-beta5 bulma date-fns
+npm i pg knex fastify @fastify/view pug @fastify/websocket htmx.org@4.0.0-beta5 bulma date-fns
 mkdir -p app/{controllers,services,configs,models,infra,templates}
 touch app/main.js
 touch app/configs/db.js
@@ -38,6 +38,8 @@ touch app/templates/index.pug
 ```
 
 ## How to test
+
+### Lint / format
 
 ## How to run
 
