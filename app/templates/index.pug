@@ -1,8 +1,5 @@
-doctype html
-html
-    head
-        title It's WorHou time!
-        link(rel="stylesheet", href="bulma/1/bulma.css")
-    body
-        h1=message
-
+extends ./layouts/main
+block content
+    div(class="notification is-textAlign-center py-6")
+        p(class="title is-4")=message
+        p(class="subtitle is-6") Under construction

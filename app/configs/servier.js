@@ -28,6 +28,12 @@ fastify.register(fastifyStatic, {
 	decorateReply: false,
 });
 
+fastify.register(fastifyStatic, {
+	root: path.join(import.meta.dirname || __dirname, '../static'),
+	prefix: '/static', // static/worhou.css
+	decorateReply: false,
+});
+
 // Set up template engine
 
 fastify.register(fastifyView, {

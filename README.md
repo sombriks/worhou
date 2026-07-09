@@ -1,4 +1,6 @@
-# WorHou
+# [WorHou][repo]
+
+[repo]: https://github.com/sombriks/worhou
 
 Working hours sample app
 
@@ -15,8 +17,7 @@ Working hours sample app
     - htmx
     - bulma
     - date-fns
-- Test & Lint
-    - supertest
+- Test & Lint frameworks
     - ava
     - c8
     - xo
@@ -49,13 +50,14 @@ npm i pug htmx.org@4.0.0-beta5 bulma date-fns
 Initial skeleton:
 
 ```bash
-mkdir -p app/{controllers,services,configs,models,infra,templates}
+mkdir -p app/{configs,controllers,infra,models,services,static,templates}
 touch app/main.js
 touch app/configs/{servier,db}.js
 touch app/controllers/{person,worksheet,timelog,dashboard,notifications}.js
-touch app/services/{person,worksheet,timelog,dashboard,notifications}.js
 touch app/infra/database.yml
 touch app/models/{person,worksheet,notifications}.js
+touch app/services/{person,worksheet,timelog,dashboard,notifications}.js
+touch app/static/worhou.{css,js}
 touch app/templates/index.pug
 mkdir -p app/templates/{components,pages,layouts}
 ```
