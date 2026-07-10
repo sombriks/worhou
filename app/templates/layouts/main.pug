@@ -1,30 +1,18 @@
-
+include ../components/navbar
+-
+  const base = process.env.BASE_URL ?? '';
 doctype html
 html
     head
         meta(charset="UTF-8")/
         meta(name="viewport" content="width=device-width, initial-scale=1.0")/
-        link(rel="stylesheet", href="bulma/1/bulma.css")/
-        link(rel="stylesheet", href="static/worhou.css")/
-        script(type="text/javascript" src="htmx/4/htmx.js")
-        script(type="text/javascript" src="static/worhou.js")
+        link(rel="stylesheet", href=`${base}/bulma/1/bulma.css`)/
+        link(rel="stylesheet", href=`${base}/static/worhou.css`)/
+        script(type="text/javascript" src=`${base}/htmx/4/htmx.js`)
+        script(type="text/javascript" src=`${base}/static/worhou.js`)
         title It's WorHou time!
     body
-        nav(class="navbar is-primary" role="navigation" aria-label="main navigation")
-            div(class="navbar-brand")
-                a(class="navbar-item font-weight-bold" href="#")
-                    strong WorHou
-                a(role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu")
-                    span(aria-hidden="true")
-                    span(aria-hidden="true")
-                    span(aria-hidden="true")
-                    span(aria-hidden="true")
-            div(id="navbarMenu" class="navbar-menu")
-                div(class="navbar-start")
-                    a(class="navbar-item" href="#") Timelog
-                    a(class="navbar-item" href="#") Timesheet
-                    a(class="navbar-item" href="#") Profile
-                    a(class="navbar-item" href="#") Teams
+        +navbar(base)
         main(class="section")
             div(class="container")
                 block content
