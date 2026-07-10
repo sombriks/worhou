@@ -16,6 +16,7 @@
   "author": "sombriks",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^26.1.1",
     "ava": "^7.0.0",
     "c8": "^11.0.0",
     "xo": "^2.0.2"

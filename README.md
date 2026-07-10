@@ -40,7 +40,7 @@ Dependencies:
 
 ```bash
 # development
-npm i -D ava c8 xo
+npm i -D ava c8 xo @types/node
 # all others
 npm i pg knex
 npm i fastify @fastify/view @fastify/static @fastify/websocket

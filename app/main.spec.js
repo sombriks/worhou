@@ -1,5 +1,5 @@
 import test from 'ava';
-import {fastify} from './configs/servier.js';
+import {fastify} from './configs/server.js';
 
 test('should get index page', async t => {
 	const response = await fastify.inject({
