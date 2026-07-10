@@ -1,7 +1,7 @@
 import test from 'ava';
 import {fastify} from './configs/server.js';
 
-test('should get index page', async t => {
+test('should get index/onboarding page', async t => {
 	const response = await fastify.inject({
 		method: 'GET',
 		url: '/',

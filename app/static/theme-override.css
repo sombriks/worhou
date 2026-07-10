@@ -1,0 +1,52 @@
+/* bulma theme overrides */
+:root,
+html.theme-light {
+    --bulma-primary-h: 217;
+    --bulma-primary-s: 100%;
+    --bulma-primary-l: 50%;
+    --bulma-scheme-main: hsl(0, 0%, 100%);
+    --bulma-scheme-main-bis: hsl(0, 0%, 96%);
+    --bulma-scheme-main-ter: hsl(0, 0%, 93%);
+    --bulma-scheme-invert: hsl(0, 0%, 21%);
+    --bulma-text: hsl(0, 0%, 21%);
+    --bulma-text-strong: hsl(0, 0%, 7%);
+}
+
+html.theme-dark {
+    --bulma-primary-h: 217;
+    --bulma-primary-s: 100%;
+    --bulma-primary-l: 60%;
+    --bulma-scheme-main: hsl(0, 0%, 14%);
+    --bulma-scheme-main-bis: hsl(0, 0%, 10%);
+    --bulma-scheme-main-ter: hsl(0, 0%, 7%);
+    --bulma-scheme-invert: hsl(0, 0%, 100%);
+    --bulma-text: hsl(0, 0%, 86%);
+    --bulma-text-strong: hsl(0, 0%, 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not(.theme-light) {
+        --bulma-primary-h: 217;
+        --bulma-primary-s: 100%;
+        --bulma-primary-l: 60%;
+        --bulma-scheme-main: hsl(0, 0%, 14%);
+        --bulma-scheme-main-bis: hsl(0, 0%, 10%);
+        --bulma-scheme-main-ter: hsl(0, 0%, 7%);
+        --bulma-scheme-invert: hsl(0, 0%, 100%);
+        --bulma-text: hsl(0, 0%, 86%);
+        --bulma-text-strong: hsl(0, 0%, 100%);
+    }
+}
+
+body {
+    background-color: var(--bulma-scheme-main);
+    color: var(--bulma-text);
+}
+
+.button.is-primary {
+    background-color: hsl(
+            var(--bulma-primary-h),
+            var(--bulma-primary-s),
+            var(--bulma-primary-l)
+    );
+}

@@ -7,10 +7,12 @@ html
         meta(charset="UTF-8")/
         meta(name="viewport" content="width=device-width, initial-scale=1.0")/
         link(rel="stylesheet", href=`${base}/bulma/1/bulma.css`)/
+        link(rel="stylesheet", href=`${base}/static/theme-override.css`)/
         link(rel="stylesheet", href=`${base}/static/worhou.css`)/
         script(type="text/javascript" src=`${base}/htmx/4/htmx.js`)
         script(type="text/javascript" src=`${base}/static/worhou.js`)
-        title It's WorHou time!
+        block head
+            title It's WorHou time!
     body
         +navbar(base)
         main(class="section")

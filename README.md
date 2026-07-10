@@ -53,13 +53,25 @@ Initial skeleton:
 mkdir -p app/{configs,controllers,infra,models,services,static,templates}
 touch app/main.js
 touch app/configs/{servier,db}.js
-touch app/controllers/{person,worksheet,timelog,dashboard,notifications}.js
+touch app/controllers/{person,worksheet,timelog}.js
+touch app/controllers/{dashboard,notifications,onboarding}.js
 touch app/infra/database.yml
 touch app/models/{person,worksheet,notifications}.js
 touch app/services/{person,worksheet,timelog,dashboard,notifications}.js
 touch app/static/worhou.{css,js}
 touch app/templates/index.pug
 mkdir -p app/templates/{components,pages,layouts}
+```
+
+## Environment variables
+
+```bash
+NODE_ENV=development
+BASE_URL=
+DB_USER=worhou
+DB_PASSWORD=
+DB_PORT=5432
+PORT=3000
 ```
 
 ## How to test

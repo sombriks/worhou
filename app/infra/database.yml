@@ -8,4 +8,4 @@ services:
       POSTGRES_USER:  ${DB_USER:-worhou}
       POSTGRES_DB:  ${DB_USER:-worhou}
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
