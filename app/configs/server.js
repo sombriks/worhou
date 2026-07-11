@@ -5,42 +5,37 @@ import fastifyView from '@fastify/view';
 import pug from 'pug';
 import {buildApi} from './api-builder.js';
 
-// Expose the server
+// expose the server
 export const fastify = Fastify({
-	logger: true,
+  logger: true,
 });
 
-// Expose some frontend libraries
+// set up frontend libraries
 
-fastify.register(fastifyStatic, {
-	root: path.join(import.meta.dirname, '../../node_modules/htmx.org/dist'),
-	prefix: '/htmx/4', // Htmx/4/htmx.js
-});
+const nodeModules = path.join(import.meta.dirname, '../../node_modules');
+const statics = {
+  [path.join(nodeModules, 'htmx.org/dist')]: '/htmx/4', // Htmx/4/htmx.js
+  [path.join(nodeModules, 'bulma/css')]: '/bulma/1', // Bulma/1/bulma.css
+  [path.join(nodeModules, 'date-fns')]: '/date-fns/4', // Date-fns/4/cdn.js
+  [path.join(nodeModules, '@mdi/font')]: '/mdi/7', // mdi/7/css/materialdesignicons.css
+  [path.join(import.meta.dirname, '../static')]: '/static', // Static/worhou.css
+}
 
-fastify.register(fastifyStatic, {
-	root: path.join(import.meta.dirname, '../../node_modules/bulma/css'),
-	prefix: '/bulma/1', // Bulma/1/bulma.css
-	decorateReply: false,
-});
-
-fastify.register(fastifyStatic, {
-	root: path.join(import.meta.dirname, '../../node_modules/date-fns'),
-	prefix: '/date-fns/4', // Date-fns/4/cdn.js
-	decorateReply: false,
-});
-
-fastify.register(fastifyStatic, {
-	root: path.join(import.meta.dirname, '../static'),
-	prefix: '/static', // Static/worhou.css
-	decorateReply: false,
-});
+let decorateReply = true;
+for (let root in statics) {
+  const prefix = statics[root];
+  fastify.register(fastifyStatic, {
+    root, prefix, decorateReply,
+  });
+  decorateReply = false;
+}
 
 // Set up template engine
 
 fastify.register(fastifyView, {
-	root: path.join(import.meta.dirname, '../templates'),
-	viewExt: 'pug',
-	engine: {pug},
+  root: path.join(import.meta.dirname, '../templates'),
+  viewExt: 'pug',
+  engine: {pug},
 });
 
 // Wire routes with style

@@ -1,10 +1,12 @@
 // navbar
+include ./icon-text
+
 mixin navbar(localBase=process.env.BASE_URL ?? '')
     nav(class="navbar is-primary" role="navigation"
         aria-label="main navigation")
         div(class="navbar-brand")
             a(class="navbar-item font-weight-bold" href=`${localBase}/`)
-                strong WorHou
+                img.image.is-square(alt="WorHou" src=`${localBase}/static/worhou.png`)
             a(role="button" class="navbar-burger" aria-label="menu"
                 aria-expanded="false" data-target="navbarMenu")
                 span(aria-hidden="true")
@@ -13,7 +15,11 @@ mixin navbar(localBase=process.env.BASE_URL ?? '')
                 span(aria-hidden="true")
         div(id="navbarMenu" class="navbar-menu")
             div(class="navbar-start")
-                a(class="navbar-item" href=`${localBase}/timelog`) Timelog
-                a(class="navbar-item" href=`${localBase}/worksheet`) Worksheet
-                a(class="navbar-item" href=`${localBase}/profile`) Profile
-                a(class="navbar-item" href=`${localBase}/teams`) Teams
+                a(class="navbar-item" href=`${localBase}/timelog`)
+                    +icon-text("mdi mdi-clock-outline", "Timelog")
+                a(class="navbar-item" href=`${localBase}/worksheet`)
+                    +icon-text("mdi mdi-text-box-check-outline","Worksheet")
+                a(class="navbar-item" href=`${localBase}/profile`)
+                    +icon-text("mdi mdi-account-circle","Profile")
+                a(class="navbar-item" href=`${localBase}/teams`)
+                    +icon-text("mdi mdi-account-group-outline","Teams")
