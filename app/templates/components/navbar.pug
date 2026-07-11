@@ -7,13 +7,12 @@ mixin navbar(localBase=process.env.BASE_URL ?? '')
         div(class="navbar-brand")
             a(class="navbar-item font-weight-bold" href=`${localBase}/`)
                 img.image.is-square(alt="WorHou" src=`${localBase}/static/worhou.png`)
-            a(role="button" class="navbar-burger" aria-label="menu"
-                aria-expanded="false" data-target="navbarMenu")
+            a(role="button" class="navbar-burger" aria-label="menu" aria-expanded="false")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
-        div(id="navbarMenu" class="navbar-menu")
+        div(class="navbar-menu")
             div(class="navbar-start")
                 a(class="navbar-item" href=`${localBase}/timelog`)
                     +icon-text("mdi mdi-clock-outline", "Timelog")
@@ -23,3 +22,13 @@ mixin navbar(localBase=process.env.BASE_URL ?? '')
                     +icon-text("mdi mdi-account-circle","Profile")
                 a(class="navbar-item" href=`${localBase}/teams`)
                     +icon-text("mdi mdi-account-group-outline","Teams")
+        script(type="text/javascript").
+            (() => {
+              const nav = document.currentScript.parentElement;
+              const burger = nav.querySelector('.navbar-burger');
+              const menu = nav.querySelector('.navbar-menu');
+              burger.addEventListener('click', () => {
+                burger.classList.toggle('is-active');
+                menu.classList.toggle('is-active');
+              });
+            })();

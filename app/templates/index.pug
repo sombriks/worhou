@@ -1,6 +1,14 @@
 extends ./layouts/main
+include ./components/notification
+
+//- person onboarding
+//- already have a login?
+//- provision user so the timelog can be created
+//- check if there is an user in localstorage, attempt to get it back if present
+//- and if login matches
+//- offers to login or create account if login is low grade, like device login.
+//- kicks user out to dashboard if there is a person already
 block content
-    div(class="notification is-textAlign-center py-6")
+    +notification("is-info")
         p(class="title is-4")=message
         p(class="subtitle is-6") Under construction
-

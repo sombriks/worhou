@@ -109,9 +109,12 @@ npm run dev
 
 ## Noteworthy
 
-- I am getting old, there is no need to nodemon anymore, node.js now has a
-  builtin watch function
-- fastify [inject][fastify-inject] makes testing pretty neat.
+- I am getting old, there is no need to nodemon anymore, Node.js now has a
+  builtin watch function.
+- Fastify [inject][fastify-inject] makes testing pretty neat.
+- [Locality Of Behavior][lob] first, Single [Responsibility Principle][srp] 
+  when there are too many concerns.
 
 [fastify-inject]: https://fastify.dev/docs/latest/Guides/Testing/
-
+[lob]: https://htmx.org/essays/locality-of-behaviour/
+[srp]: https://en.wikipedia.org/wiki/Single-responsibility_principle

@@ -1,0 +1,15 @@
+mixin notification(cls='is-info')
+    div(class=`notification ${cls} is-textAlign-center py-6`)
+        button(class="delete")
+        if block
+            block
+        else
+            i -
+    script(type="text/javascript").
+      (() => {
+        document.currentScript.parentElement;
+        const notification = document.currentScript.parentElement;
+        notification.querySelector('button')
+          .addEventListener('click', () => notification.remove());
+      })();
+
