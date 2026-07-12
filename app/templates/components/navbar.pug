@@ -2,7 +2,7 @@
 include ./icon-text
 
 mixin navbar(localBase=process.env.BASE_URL ?? '')
-    nav(class="navbar is-primary" role="navigation"
+    nav(class="navbar" role="navigation"
         aria-label="main navigation")
         div(class="navbar-brand")
             a(class="navbar-item font-weight-bold" href=`${localBase}/`)
@@ -23,12 +23,11 @@ mixin navbar(localBase=process.env.BASE_URL ?? '')
                 a(class="navbar-item" href=`${localBase}/teams`)
                     +icon-text("mdi mdi-account-group-outline","Teams")
         script(type="text/javascript").
-            (() => {
-              const nav = document.currentScript.parentElement;
+            lobRoot(nav => {
               const burger = nav.querySelector('.navbar-burger');
               const menu = nav.querySelector('.navbar-menu');
               burger.addEventListener('click', () => {
                 burger.classList.toggle('is-active');
                 menu.classList.toggle('is-active');
               });
-            })();
+            });

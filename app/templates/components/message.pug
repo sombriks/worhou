@@ -1,0 +1,17 @@
+mixin message(title='', cls='', closable=false)
+    .message.is-inline-block(class=cls)
+        .message-header
+            p=title
+            if closable
+                button.delete
+        if closable
+            script(type="text/javascript").
+                lobRoot(e => {
+                  const b = e.querySelector('.delete');
+                  b.addEventListener('click', () => {
+                    e.remove();
+                  });
+                });
+        .message-body
+            if block
+                block

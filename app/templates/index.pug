@@ -1,14 +1,25 @@
 extends ./layouts/main
-include ./components/notification
+include ./components/message
 
-//- person onboarding
-//- already have a login?
-//- provision user so the timelog can be created
-//- check if there is an user in localstorage, attempt to get it back if present
-//- and if login matches
-//- offers to login or create account if login is low grade, like device login.
-//- kicks user out to dashboard if there is a person already
 block content
-    +notification("is-info")
-        p(class="title is-4")=message
-        p(class="subtitle is-6") Under construction
+    +message("Welcome","is-info",true)
+        p.title ...
+        p.subtitle ...
+        p.logins.is-hidden
+        | How about setup an account? it's free!!
+        script(type="text/javascript").
+          lobRoot(message => {
+            const w = new WorHou(true);
+            message.querySelector('p.title').innerText = `Hello, ${w.userName}!`;
+
+            if (w.visits > 0) {
+              message.querySelector('p.subtitle').innerText = "Welcome back!";
+            } else {
+              message.querySelector('p.subtitle').innerText = "Are you new Here?!";
+            }
+            w.incrementVisits();
+
+            if (w.logins === 0) {
+              message.querySelector('p.logins').classList.remove('is-hidden');
+            }
+          });

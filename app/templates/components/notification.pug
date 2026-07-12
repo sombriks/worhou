@@ -6,10 +6,8 @@ mixin notification(cls='is-info')
         else
             i -
     script(type="text/javascript").
-      (() => {
-        document.currentScript.parentElement;
-        const notification = document.currentScript.parentElement;
+      lobRoot(notification => {
         notification.querySelector('button')
           .addEventListener('click', () => notification.remove());
-      })();
+      });
 
