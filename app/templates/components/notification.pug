@@ -1,6 +1,6 @@
 mixin notification(cls='is-info')
-    div(class=`notification ${cls} is-textAlign-center py-6`)
-        button(class="delete")
+    .notification.is-textAlign-center.py-6(class=cls)
+        button.delete
         if block
             block
         else

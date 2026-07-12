@@ -1,0 +1,14 @@
+mixin navbar-item(label,link,icon)
+    a.navbar-item(href=link)
+        span.icon-text
+            span.icon
+                i(class=icon)
+            span=label
+        script(type="text/javascript").
+            lobRoot(nvItem => {
+              const h1 = window.location.href;
+              const h2 = nvItem.href;
+              if (h1.includes(h2)) {
+                nvItem.classList.add("is-active");
+              }
+            });

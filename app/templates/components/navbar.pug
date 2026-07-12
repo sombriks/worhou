@@ -1,33 +1,29 @@
 // navbar
-include ./icon-text
+include ./navbar-item
 
 mixin navbar(localBase=process.env.BASE_URL ?? '')
-    nav(class="navbar" role="navigation"
-        aria-label="main navigation")
-        div(class="navbar-brand")
-            a(class="navbar-item font-weight-bold" href=`${localBase}/`)
+    nav.navbar(role="navigation" aria-label="main navigation")
+        .navbar-brand
+            a.navbar-item.font-weight-bold(href=`${localBase}/`)
                 img.image.is-square(alt="WorHou" src=`${localBase}/static/worhou.png`)
-            a(role="button" class="navbar-burger" aria-label="menu" aria-expanded="false")
+            a.navbar-burger(role="button" aria-label="menu" aria-expanded="false")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
-        div(class="navbar-menu")
-            div(class="navbar-start")
-                a(class="navbar-item" href=`${localBase}/timelog`)
-                    +icon-text("mdi mdi-clock-outline", "Timelog")
-                a(class="navbar-item" href=`${localBase}/worksheet`)
-                    +icon-text("mdi mdi-text-box-check-outline","Worksheet")
-                a(class="navbar-item" href=`${localBase}/profile`)
-                    +icon-text("mdi mdi-account-circle","Profile")
-                a(class="navbar-item" href=`${localBase}/teams`)
-                    +icon-text("mdi mdi-account-group-outline","Teams")
+        .navbar-menu
+            .navbar-start
+                +navbar-item("Timelog",`${localBase}/timelog`,"mdi mdi-clock-outline")
+                +navbar-item("Worksheet",`${localBase}/worksheet`,"mdi mdi-text-box-check-outline")
+            .navbar-end
+                +navbar-item("Teams",`${localBase}/teams`,"mdi mdi-account-group-outline")
+                +navbar-item("Profile",`${localBase}/profile`,"mdi mdi-account-circle")
         script(type="text/javascript").
-            lobRoot(nav => {
-              const burger = nav.querySelector('.navbar-burger');
-              const menu = nav.querySelector('.navbar-menu');
-              burger.addEventListener('click', () => {
-                burger.classList.toggle('is-active');
-                menu.classList.toggle('is-active');
-              });
+          lobRoot(nav => {
+            const burger = nav.querySelector('.navbar-burger');
+            const menu = nav.querySelector('.navbar-menu');
+            burger.addEventListener('click', () => {
+              burger.classList.toggle('is-active');
+              menu.classList.toggle('is-active');
             });
+          });

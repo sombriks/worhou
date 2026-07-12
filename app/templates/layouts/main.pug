@@ -16,12 +16,11 @@ html
             title It's WorHou time!
     body
         +navbar(base)
-        main(class="section")
-            div(class="container")
+        main.section
+            .container.is-flex.is-justify-content-center
                 block content
                     i Nothing to see here...
-        // TODO should the footer be a dedicated component?
-        footer(class="footer py-5")
-            div(class="content has-text-centered")
-                p &copy; Sombriks, under a MIT license
+        footer.footer.py-5
+            .content.has-text-centered
+                p &copy; Sombriks under a MIT license
 

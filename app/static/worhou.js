@@ -2,15 +2,20 @@
  * Details about the person already known in this browser
  */
 class WorHou {
+
 	static #instance;
 	#user;
 
 	constructor(clear = false) {
-		if (!clear && WorHou.#instance) {
+		if (clear) {
+			localStorage.removeItem('user');
+			WorHou.#instance = null;
+		}
+
+		if (WorHou.#instance) {
 			return WorHou.#instance;
 		}
 
-		localStorage.removeItem('user');
 		WorHou.#instance = this;
 
 		// Get the user from local storage

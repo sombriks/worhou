@@ -5,11 +5,13 @@ block content
     +message("Welcome","is-info",true)
         p.title ...
         p.subtitle ...
+        -
+            const base = process.env.BASE_URL;
         p.logins.is-hidden
-        | How about setup an account? it's free!!
+        | How about to #[a(href=`${base}/profile`) setup an account]? it's free!!
         script(type="text/javascript").
           lobRoot(message => {
-            const w = new WorHou(true);
+            const w = new WorHou();
             message.querySelector('p.title').innerText = `Hello, ${w.userName}!`;
 
             if (w.visits > 0) {

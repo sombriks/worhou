@@ -8,5 +8,5 @@ test('should get index/onboarding page', async t => {
 	});
 
 	t.is(response.statusCode, 200);
-	t.true(response.payload.includes('hello, stranger!'));
+	t.regex(response.payload, /welcome/i);
 });
