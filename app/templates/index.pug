@@ -2,7 +2,7 @@ extends ./layouts/main
 include ./components/message
 
 block content
-    +message("Welcome","is-info",true)
+    +message("Welcome","is-success")
         p.title ...
         p.subtitle ...
         -
@@ -25,3 +25,7 @@ block content
               message.querySelector('p.logins').classList.remove('is-hidden');
             }
           });
+    +message("What is WorHou?","is-info")
+        p #[b WorHou] is a #[i time logging] application.
+        p It helps you to track time, build reports from it
+        p and even share it across teams.
