@@ -6,71 +6,75 @@ import pug from 'pug';
 import * as onboarding from '../controllers/onboarding.js';
 import * as timelog from '../controllers/timelog.js';
 import * as worksheet from '../controllers/worksheet.js';
+import * as teams from '../controllers/teams.js';
 import * as profile from '../controllers/profile.js';
 
 // Expose the server
 export const fastify = Fastify({
-	logger: true,
+  logger: true,
 });
 
 // Set up frontend libraries
 
 const nodeModules = path.join(import.meta.dirname, '../../node_modules');
 const statics = {
-	[path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // Htmx/4/htmx.js
-	[path.join(nodeModules, 'bulma/css')]: '/bulma', // Bulma/1/bulma.css
-	[path.join(nodeModules, 'date-fns')]: '/date-fns', // Date-fns/4/cdn.js
-	[path.join(nodeModules, '@mdi/font')]: '/mdi', // Mdi/7/css/materialdesignicons.css
-	[path.join(import.meta.dirname, '../static')]: '/static', // Static/worhou.css
+  [path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // Htmx/4/htmx.js
+  [path.join(nodeModules, 'bulma/css')]: '/bulma', // Bulma/1/bulma.css
+  [path.join(nodeModules, 'date-fns')]: '/date-fns', // Date-fns/4/cdn.js
+  [path.join(nodeModules, '@mdi/font')]: '/mdi', // Mdi/7/css/materialdesignicons.css
+  [path.join(import.meta.dirname, '../static')]: '/static', // Static/worhou.css
 };
 
 let decorateReply = true;
 for (const root in statics) {
-	const prefix = statics[root];
-	fastify.register(fastifyStatic, {
-		root, prefix, decorateReply,
-	});
-	decorateReply = false;
+  const prefix = statics[root];
+  fastify.register(fastifyStatic, {
+    root, prefix, decorateReply,
+  });
+  decorateReply = false;
 }
 
 // Set up template engine
 
 fastify.register(fastifyView, {
-	root: path.join(import.meta.dirname, '../templates'),
-	viewExt: 'pug',
-	engine: {pug},
+  root: path.join(import.meta.dirname, '../templates'),
+  defaultContext: {
+    base: process.env.BASE_URL ?? '',
+  },
+  viewExt: 'pug',
+  engine: {pug},
 });
 
 // Wire routes with style
 
 const api = {
-	'/': {
-		get: onboarding.page,
-	},
-	'/timelog': {
-		get: timelog.page,
-	},
-	'/worksheet': {
-		get: worksheet.page,
-	},
-	'/profile': {
-		get: profile.page,
-	},
-	'/teams': {
-		get: profile.page,
-	},
+  '/': {
+    get: onboarding.page,
+  },
+  '/timelog': {
+    get: timelog.page,
+  },
+  '/worksheet': {
+    get: worksheet.page,
+  },
+  '/profile': {
+    get: profile.page,
+  },
+  '/teams': {
+    get: teams.page,
+  },
 };
 
 const methods = new Set(['get', 'post', 'put', 'delete']);
 
 const buildApi = (fastify, routes = api, base = '') => {
-	for (const key in routes) {
-		if (methods.has(key)) {
-			fastify[key](base, routes[key]);
-		} else {
-			buildApi(fastify, routes[key], base + key);
-		}
-	}
+  for (const key in routes) {
+    if (methods.has(key)) {
+      fastify[key](base, routes[key]);
+    } else {
+      buildApi(fastify, routes[key], base + key);
+    }
+  }
 };
 
 buildApi(fastify);

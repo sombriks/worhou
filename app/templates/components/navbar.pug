@@ -1,11 +1,19 @@
 // navbar
 include ./navbar-item
 
-mixin navbar(localBase=process.env.BASE_URL ?? '')
+mixin navbar()
     nav.navbar(role="navigation" aria-label="main navigation")
         .navbar-brand
-            a.navbar-item.font-weight-bold(href=`${localBase}/`)
-                img.image.is-square(alt="WorHou" src=`${localBase}/static/worhou.png`)
+            a.navbar-item.font-weight-bold(href=`${base}/`)
+                img.image.is-square(alt="WorHou" src=`${base}/static/worhou.png`)
+                script(type="text/javascript").
+                  lobRoot(nvItem => {
+                    const h1 = window.location.href;
+                    const h2 = nvItem.href;
+                    if (h1 === h2) {
+                      nvItem.classList.add("is-active");
+                    }
+                  });
             a.navbar-burger(role="button" aria-label="menu" aria-expanded="false")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
@@ -13,11 +21,11 @@ mixin navbar(localBase=process.env.BASE_URL ?? '')
                 span(aria-hidden="true")
         .navbar-menu
             .navbar-start
-                +navbar-item("Timelog",`${localBase}/timelog`,"mdi mdi-clock-outline")
-                +navbar-item("Worksheet",`${localBase}/worksheet`,"mdi mdi-text-box-check-outline")
+                +navbar-item("Timelog",`${base}/timelog`,"mdi mdi-clock-outline")
+                +navbar-item("Worksheet",`${base}/worksheet`,"mdi mdi-text-box-check-outline")
             .navbar-end
-                +navbar-item("Teams",`${localBase}/teams`,"mdi mdi-account-group-outline")
-                +navbar-item("Profile",`${localBase}/profile`,"mdi mdi-account-circle")
+                +navbar-item("Teams",`${base}/teams`,"mdi mdi-account-group-outline")
+                +navbar-item("Profile",`${base}/profile`,"mdi mdi-account-circle")
         script(type="text/javascript").
           lobRoot(nav => {
             const burger = nav.querySelector('.navbar-burger');

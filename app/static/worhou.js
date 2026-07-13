@@ -23,8 +23,8 @@ class WorHou {
 		if (!this.#user) {
 			this.#user = {
 				name: 'Stranger',
+				logged: false,
 				visits: 0,
-				logins: 0,
 			};
 			localStorage.setItem('user', JSON.stringify(this.#user));
 		}
@@ -43,8 +43,8 @@ class WorHou {
 		localStorage.setItem('user', JSON.stringify(this.#user));
 	}
 
-	get logins() {
-		return this.#user?.logins || 0;
+	get logged() {
+		return this.#user?.logged || false;
 	}
 }
 

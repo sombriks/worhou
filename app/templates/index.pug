@@ -5,8 +5,6 @@ block content
     +message("Welcome","is-success")
         p.title ...
         p.subtitle ...
-        -
-            const base = process.env.BASE_URL;
         p.logins.is-hidden
         | How about to #[a(href=`${base}/profile`) setup an account]? it's free!!
         script(type="text/javascript").
@@ -29,3 +27,13 @@ block content
         p #[b WorHou] is a #[i time logging] application.
         p It helps you to track time, build reports from it
         p and even share it across teams.
+    +message("Timelog", "is-warning", true)
+        p Please #[a(href=`${base}/profile`) login] to be able
+        p to #[i clock in / clock out].
+        script(type="text/javascript").
+            lobRoot(message => {
+              const w = new WorHou();
+              if (w.logged) {
+                message.parentElement.remove();
+              }
+            })

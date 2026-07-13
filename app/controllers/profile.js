@@ -1,1 +1,1 @@
-export const page = async (request, res) => res.view('pages/profile');
+export const page = async (req, res) => res.view('pages/profile');

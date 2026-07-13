@@ -1,5 +1,51 @@
 extends ../layouts/main
+include ../components/message
 
 block head
     title Profile
-
+block content
+    .root-profile
+        .login.is-hidden
+            +message('Log In',"is-success")
+                form(hx-post=`${base}/login`, hx-target="closest .root-profile")
+                    .field
+                        label.label Username
+                        .control
+                            input.input(type="text" name="username" placeholder="Username")/
+                    .field
+                        label.label Password
+                        .control
+                            input.input(type="password" name="password" placeholder="Password")/
+                    .field.is-grouped.is-grouped-right
+                        input.button.is-primary(type="submit" value="Log In")/
+                    .field.is-grouped.is-grouped-left
+                        span No account? #[a.go-signup create one]
+        .signup.is-hidden
+            +message('Sign Up',"is-info")
+                form(hx-post=`${base}/signup`, hx-target="closest .message")
+                    .field
+                        label.label Username
+                        .control
+                            input.input(type="text" placeholder="Username")/
+                    .field.is-grouped.is-grouped-right
+                        input.button.is-primary(type="submit" value="Sign Up")/
+        .profile.is-hidden
+            +message("Profile","is-warning")
+        script(type="text/javascript").
+          lobRoot(rootProfile => {
+            const w = new WorHou();
+            if (!w.logged) {
+              rootProfile.querySelector(".login")
+                .classList.remove("is-hidden");
+            } else {
+              rootProfile.querySelector(".profile")
+                .classList.remove("is-hidden");
+            }
+            rootProfile.querySelector(".go-signup")
+              .addEventListener("click", () => {
+                rootProfile.querySelector(".signup")
+                  .classList.remove("is-hidden");
+                rootProfile.querySelector(".login")
+                  .classList.add("is-hidden");
+              });
+          });

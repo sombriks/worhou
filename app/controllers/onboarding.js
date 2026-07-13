@@ -1,2 +1,2 @@
 
-export const page = async (request, res) => res.view('index');
+export const page = async (req, res) => res.view('index');
