@@ -2,7 +2,6 @@
  * Details about the person already known in this browser
  */
 class WorHou {
-
 	static #instance;
 	#user;
 
@@ -23,7 +22,6 @@ class WorHou {
 		if (!this.#user) {
 			this.#user = {
 				name: 'Stranger',
-				logged: false,
 				visits: 0,
 			};
 			localStorage.setItem('user', JSON.stringify(this.#user));
@@ -44,7 +42,12 @@ class WorHou {
 	}
 
 	get logged() {
-		return this.#user?.logged || false;
+		return this.#user?.token || false;
+	}
+
+	set token(token) {
+		this.#user.token = token;
+		localStorage.setItem('user', JSON.stringify(this.#user));
 	}
 }
 

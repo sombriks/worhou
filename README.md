@@ -72,6 +72,7 @@ DB_USER=worhou
 DB_PASSWORD=
 DB_PORT=5432
 PORT=3000
+AUTH_KEY=
 ```
 
 ## How to test
