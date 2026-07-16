@@ -24,12 +24,12 @@ fastify.register(fastifyMultipart);
 
 const nodeModules = path.join(import.meta.dirname, '../../node_modules');
 const statics = {
-	[path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // Htmx/4/htmx.js
-	[path.join(nodeModules, 'bulma/css')]: '/bulma', // Bulma/1/bulma.css
-	[path.join(nodeModules, 'date-fns')]: '/date-fns', // Date-fns/4/cdn.js
+	[path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // htmx/htmx.js
+	[path.join(nodeModules, 'bulma/css')]: '/bulma', // bulma/bulma.css
+	[path.join(nodeModules, '@date-fns/cdn')]: '/date-fns', // date-fns/cdn.js
 	[path.join(nodeModules, 'jwt-decode/build/cjs')]: '/jwt-decode', // jwt-decode/index.js
-	[path.join(nodeModules, '@mdi/font')]: '/mdi', // Mdi/7/css/materialdesignicons.css
-	[path.join(import.meta.dirname, '../static')]: '/static', // Static/worhou.css
+	[path.join(nodeModules, '@mdi/font')]: '/mdi', // mdi/7/css/materialdesignicons.css
+	[path.join(import.meta.dirname, '../static')]: '/static', // atatic/worhou.css
 };
 
 let decorateReply = true;
