@@ -146,3 +146,5 @@ vite.config.ts.timestamp-*
 .idea
 .run
 .junie
+.nvmrc
+db.sqlite3

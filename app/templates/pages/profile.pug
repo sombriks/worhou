@@ -45,6 +45,9 @@ block content
                         span Already have an account? #[a.go-login sign-in]
         .profile.is-hidden
             +message("Profile","is-warning")
+                .title ...
+                .field.is-grouped.is-grouped-right
+                    button.button.is-danger Logout
         script(type="text/javascript").
           lobRoot(rootProfile => {
             const w = new WorHou();
@@ -54,6 +57,8 @@ block content
             } else {
               rootProfile.querySelector(".profile")
                 .classList.remove("is-hidden");
+              rootProfile.querySelector(".profile .title")
+                .textContent = `Hello, ${w.userName}!`;
             }
             rootProfile.querySelector(".go-signup")
               .addEventListener("click", () => {
@@ -69,4 +74,12 @@ block content
                 rootProfile.querySelector(".signup")
                   .classList.add("is-hidden");
               });
+            rootProfile.querySelector(".profile button")
+              .addEventListener("click", () => {
+                w.logout();
+                rootProfile.querySelector(".login")
+                  .classList.remove("is-hidden");
+                rootProfile.querySelector(".profile")
+                  .classList.add("is-hidden");
+              })
           });

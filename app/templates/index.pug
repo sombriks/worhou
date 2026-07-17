@@ -6,7 +6,7 @@ block content
         p.title ...
         p.subtitle ...
         p.logins.is-hidden
-        | How about to #[a(href=`${base}/profile`) setup an account]? it's free!!
+            | How about to #[a(href=`${base}/profile`) setup an account]? it's free!!
         script(type="text/javascript").
           lobRoot(message => {
             const w = new WorHou();
@@ -19,7 +19,7 @@ block content
             }
             w.incrementVisits();
 
-            if (w.logins === 0) {
+            if (!w.logged) {
               message.querySelector('p.logins').classList.remove('is-hidden');
             }
           });
@@ -31,9 +31,9 @@ block content
         p Please #[a(href=`${base}/profile`) login] to be able
         p to #[i clock in / clock out].
         script(type="text/javascript").
-            lobRoot(message => {
-              const w = new WorHou();
-              if (w.logged) {
-                message.parentElement.remove();
-              }
-            })
+          lobRoot(message => {
+            const w = new WorHou();
+            if (w.logged) {
+              message.parentElement.remove();
+            }
+          })
