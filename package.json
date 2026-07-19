@@ -22,7 +22,10 @@
     "dev": "node --env-file=.env --watch app/main.js",
     "test": "c8 ava",
     "lint": "xo --fix",
-    "migrate:make": "knex --knexfile app/migrations/knexfile.js migrate:make --"
+    "migrate:make": "knex --knexfile app/migrations/knexfile.js migrate:make --",
+    "migrate:latest": "knex --knexfile app/migrations/knexfile.js migrate:latest",
+    "migrate:up": "knex --knexfile app/migrations/knexfile.js migrate:up",
+    "migrate:down": "knex --knexfile app/migrations/knexfile.js migrate:down"
   },
   "devDependencies": {
     "@testcontainers/postgresql": "^12.0.4",
@@ -30,6 +33,7 @@
     "@types/node": "^26.1.1",
     "ava": "^7.0.0",
     "c8": "^11.0.0",
+    "js-yaml": "^5.2.1",
     "xo": "^2.0.2"
   },
   "dependencies": {

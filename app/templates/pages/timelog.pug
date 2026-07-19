@@ -1,4 +1,20 @@
 extends ../layouts/main
+include ../components/message
 
 block head
     title Timelog
+block content
+    .when-logged
+        +message("Last timelog", "is-info is-hidden", true)
+            p(hx-trigger="load",
+                hx-swap="outerHTML",
+                hx-get=`${base}/timelog/last`).
+                Your last timelog was ????
+        script(type="text/javascript").
+          lobRoot(el => {
+            const w = new WorHou();
+            if (w.logged) el.classList.remove("is-hidden");
+            else el.remove();
+          });
+    .when-not-logged
+        // make it a beautiful component

@@ -1,13 +1,21 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import test from 'ava';
+import * as yaml from 'js-yaml';
 import {PostgreSqlContainer} from '@testcontainers/postgresql';
 import {fastify} from './configs/server.js';
 import database from './configs/database.js';
 
+// Extract database image from infra/database.yml
+const databaseYmlPath = path.join(import.meta.dirname, 'infra/database.yml');
+const databaseYml = yaml.load(fs.readFileSync(databaseYmlPath, 'utf8'));
+const {image} = databaseYml.services.db;
+
 let container;
 
 test.before(async () => {
-	container = await new PostgreSqlContainer('postgres:16-alpine').start();
-	// db override
+	container = await new PostgreSqlContainer(image).start();
+	// Db override
 	await database.initDb({
 		host: container.getHost(),
 		port: container.getPort(),
