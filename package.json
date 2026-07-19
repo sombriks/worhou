@@ -3,6 +3,15 @@
   "name": "worhou",
   "version": "1.0.0",
   "description": "Working hours sample app",
+  "keywords": [
+    "knex",
+    "fastify",
+    "pug",
+    "htmx",
+    "bulma"
+  ],
+  "author": "sombriks",
+  "license": "MIT",
   "main": "app/main.js",
   "engines": {
     "node": ">=24"
@@ -12,13 +21,12 @@
     "db:down": "docker compose -f app/infra/database.yml down",
     "dev": "node --env-file=.env --watch app/main.js",
     "test": "c8 ava",
-    "lint": "xo --fix"
+    "lint": "xo --fix",
+    "migrate:make": "knex --knexfile app/migrations/knexfile.js migrate:make --"
   },
-  "keywords": [],
-  "author": "sombriks",
-  "license": "MIT",
   "devDependencies": {
     "@testcontainers/postgresql": "^12.0.4",
+    "@types/knex": "^0.15.2",
     "@types/node": "^26.1.1",
     "ava": "^7.0.0",
     "c8": "^11.0.0",
@@ -37,7 +45,6 @@
     "date-fns": "^4.4.0",
     "fastify": "^5.10.0",
     "htmx.org": "^4.0.0-beta5",
-    "i": "^0.3.7",
     "jsonwebtoken": "^9.0.3",
     "jwt-decode": "^4.0.0",
     "knex": "^3.3.0",
