@@ -1,5 +1,9 @@
 # [WorHou][repo]
 
+[![Node.js CI][badge]][workflow]
+
+[badge]: https://github.com/sombriks/worhou/actions/workflows/test.yml/badge.svg
+[workflow]: https://github.com/sombriks/worhou/actions/workflows/test.yml
 [repo]: https://github.com/sombriks/worhou
 
 Working hours sample app
