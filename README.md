@@ -118,8 +118,8 @@ First provision an empty migration file:
 npm run migration:make migration_file_name
 ```
 
-Then go to `app/migrations/common` directory and work on the generated 
-template, using the [knex schema][knex-schema] api to evolve the database.
+Then go to `app/migrations/common` directory and work on the generated template,
+using the [knex schema][knex-schema] api to evolve the database.
 
 [knex-schema]: https://knexjs.org/guide/schema-builder.html
 
@@ -138,7 +138,7 @@ template, using the [knex schema][knex-schema] api to evolve the database.
 - Fastify [inject][fastify-inject] makes testing pretty neat.
 - [Locality Of Behavior][lob] first, Single [Responsibility Principle][srp]
   when there are too many concerns.
-- 
+-
 
 [fastify-inject]: https://fastify.dev/docs/latest/Guides/Testing/
 [lob]: https://htmx.org/essays/locality-of-behaviour/
