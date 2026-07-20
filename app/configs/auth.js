@@ -11,9 +11,9 @@ export default {
 		const hash = crypto.pbkdf2Sync(pwd, salt, 100_000, 64, 'sha512').toString('hex');
 		return `${salt}:${hash}`;
 	},
-	verify(pwd, hash) {
-		const [salt, storedHash] = hash.split(':');
+	verify(plainPwd, storedPwd) {
+		const [salt, storedHash] = storedPwd.split(':');
 		const newHash = crypto.pbkdf2Sync(pwd, salt, 100_000, 64, 'sha512').toString('hex');
 		return newHash === storedHash;
-	},
+	}
 };

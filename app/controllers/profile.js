@@ -2,15 +2,21 @@ import jwt from 'jsonwebtoken';
 import auth from '../configs/auth.js';
 import database from '../configs/database.js';
 
-export const page = async (request, res) => res.view('pages/profile');
+export const page = async (req, res) => res.view('pages/profile');
 
-export const login = async (request, res) => {
-	const {username, password} = request.body;
-	const pass = auth.encode(password);
-	const result = await database.db.raw('select 1 + 1, \'\'||:pass', {pass});
-	const payload = {sub: {id: 1, name: username}, iss: 'WorHou', aud: 'WorHou'};
-	const token = jwt.sign(payload, auth.key, {expiresIn: '1h'});
-	return res.view('partials/profile/set-token.pug', {token});
+export const login = async (req, res) => {
+  const {username, password} = req.body;
+  const login = await database.db('logins')
+    .where({identifier: username}).first();
+  if (!login) return res.view('partials/profile/not-found.pug');
+  if (auth.verify(password, login.password)) return res.view('partials/profile/not-found.pug');
+  const user = await database.db('users')
+    .where({id: login.users_id}).first();
+  if (!user) return res.view('partials/profile/not-found.pug');
+
+  const payload = {sub: user, iss: 'WorHou', aud: 'WorHou'};
+  const token = jwt.sign(payload, auth.key, {expiresIn: '1h'});
+  return res.view('partials/profile/set-token.pug', {token});
 };
 
-export const signup = async (request, res) => res.view('partials/profile/set-token.pug');
+export const signup = async (req, res) => res.view('partials/profile/set-token.pug');

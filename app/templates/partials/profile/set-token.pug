@@ -1,7 +1,8 @@
-include ../../components/notification
+include ../../components/shared/notification
 
 +notification('is-success')
-    .title ...
+    if token
+        .title Success!
     script(type="text/javascript").
         const w = new WorHou();
         w.token = '#{token}';
