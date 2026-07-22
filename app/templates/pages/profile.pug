@@ -11,9 +11,9 @@ block content
                     hx-target="closest .root-profile",
                     hx-encoding="application/x-www-form-urlencoded")
                     .field
-                        label.label Username
+                        label.label Email
                         .control
-                            input.input(type="text" name="username" placeholder="Username")/
+                            input.input(type="email" name="email" placeholder="Email")/
                     .field
                         label.label Password
                         .control
@@ -30,15 +30,19 @@ block content
                     .field
                         label.label Username
                         .control
-                            input.input(type="text" name="username" placeholder="Username")/
+                            input.input(type="text" name="user" placeholder="Username")/
+                    .field
+                        label.label Email
+                        .control
+                            input.input(type="email" name="email" placeholder="Email")/
                     .field
                         label.label Password
                         .control
-                            input.input(type="text" name="password" placeholder="password")/
+                            input.input(type="password" name="password" placeholder="password")/
                     .field
                         label.label Confirm password
                         .control
-                            input.input(type="text" name="confirmPassword" placeholder="confirm password")/
+                            input.input(type="password" name="confirmPassword" placeholder="confirm password")/
                     .field.is-grouped.is-grouped-right
                         input.button.is-primary(type="submit" value="Sign Up")/
                     .field.is-grouped.is-grouped-left

@@ -114,7 +114,7 @@ npm run dev
 
 First provision an empty migration file:
 
-```agsl
+```bash
 npm run migration:make migration_file_name
 ```
 

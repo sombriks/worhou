@@ -5,7 +5,7 @@ mixin navbar()
     nav.navbar(role="navigation" aria-label="main navigation")
         .navbar-brand
             a.navbar-item.font-weight-bold(href=`${base}/`)
-                img.image.is-square(alt="WorHou" src=`${base}/static/worhou.png`)
+                span.mdi.mdi-clock-outline(style="font-size:2rem;")
                 script(type="text/javascript").
                   lobRoot(nvItem => {
                     const h1 = window.location.href;
