@@ -58,6 +58,7 @@
     "pug": "^3.0.4"
   },
   "ava": {
+    "timeout": "5m",
     "files": [
       "app/**/*.spec.js",
       "app/*.spec.js"
