@@ -46,6 +46,14 @@ class WorHou {
 			&& this.#user?.token !== undefined;
 	}
 
+	get bearer() {
+		if (this.#user?.token) {
+			return `Bearer ${this.#user.token}`;
+		}
+
+		return null;
+	}
+
 	set token(token) {
 		this.#user.token = token;
 		const payload = token?.split('\.')[1];
@@ -75,13 +83,10 @@ const lobRoot = hobHook => {
 
 // Final setup
 
-globalThis.addEventListener('domcontentloaded', () => {
+document.addEventListener('htmx:configRequest', evt => {
 	// Htmx.config.logAll = true;
-	document.body.addEventListener('htmx:configRequest', evt => {
-		const user = localStorage.getItem('user');
-		if (user && user.token) {
-			evt.detail.headers.Authorization = `Bearer ${user.token}`;
-		}
-	});
+	const w = new WorHou();
+	if (w.token) {
+		evt.detail.headers.Authorization = `Bearer ${w.token}`;
+	}
 });
-

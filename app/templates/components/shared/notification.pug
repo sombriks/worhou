@@ -5,10 +5,10 @@ mixin notification(cls='is-info')
             block
         else
             i -
-    script(type="text/javascript").
-      lobRoot(notification => {
-        notification.querySelector('button')
-          .addEventListener('click', () =>
-            notification.remove());
-      });
+        script(type="text/javascript").
+          lobRoot(notification => {
+            notification.querySelector('button')
+              .addEventListener('click', () =>
+                notification.remove());
+          });
 

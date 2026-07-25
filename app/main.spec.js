@@ -61,3 +61,18 @@ test('should login', async t => {
 	t.is(response.statusCode, 200);
 	t.regex(response.body, /token/i);
 });
+
+test('should sign up', async t => {
+	const response = await fastify.inject({
+		method: 'POST',
+		url: '/profile/signup',
+		body: {
+			name: 'test2',
+			email: 'test2@example.com',
+			password: 'e1e2e3e4',
+		},
+	});
+
+	t.is(response.statusCode, 200);
+	t.regex(response.body, /token/i);
+});

@@ -61,7 +61,11 @@ const api = {
 		profile: {
 			get: profile.page,
 			'/login': {
+				get: profile.me,
 				put: profile.login,
+			},
+			'/signup': {
+				get: profile.createAccountForm,
 				post: profile.signup,
 			},
 		},

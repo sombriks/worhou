@@ -1,89 +1,12 @@
 extends ../layouts/main
-include ../components/shared/message
 
 block head
     title Profile
 block content
-    .root-profile
-        .login.is-hidden
-            +message('Log In',"is-success")
-                form(hx-put=`${base}/profile/login`,
-                    hx-target="closest .root-profile",
-                    hx-encoding="application/x-www-form-urlencoded")
-                    .field
-                        label.label Email
-                        .control
-                            input.input(type="email" name="email" placeholder="Email")/
-                    .field
-                        label.label Password
-                        .control
-                            input.input(type="password" name="password" placeholder="Password")/
-                    .field.is-grouped.is-grouped-right
-                        input.button.is-primary(type="submit" value="Log In")/
-                    .field.is-grouped.is-grouped-left
-                        span No account? #[a.go-signup create one]
-        .signup.is-hidden
-            +message('Sign Up',"is-info")
-                form(hx-post=`${base}/profile/login`,
-                    hx-target="closest .message",
-                    hx-encoding="application/x-www-form-urlencoded")
-                    .field
-                        label.label Username
-                        .control
-                            input.input(type="text" name="user" placeholder="Username")/
-                    .field
-                        label.label Email
-                        .control
-                            input.input(type="email" name="email" placeholder="Email")/
-                    .field
-                        label.label Password
-                        .control
-                            input.input(type="password" name="password" placeholder="password")/
-                    .field
-                        label.label Confirm password
-                        .control
-                            input.input(type="password" name="confirmPassword" placeholder="confirm password")/
-                    .field.is-grouped.is-grouped-right
-                        input.button.is-primary(type="submit" value="Sign Up")/
-                    .field.is-grouped.is-grouped-left
-                        span Already have an account? #[a.go-login sign-in]
-        .profile.is-hidden
-            +message("Profile","is-warning")
-                .title ...
-                .field.is-grouped.is-grouped-right
-                    button.button.is-danger Logout
-        script(type="text/javascript").
-          lobRoot(rootProfile => {
-            const w = new WorHou();
-            if (!w.logged) {
-              rootProfile.querySelector(".login")
-                .classList.remove("is-hidden");
-            } else {
-              rootProfile.querySelector(".profile")
-                .classList.remove("is-hidden");
-              rootProfile.querySelector(".profile .title")
-                .textContent = `Hello, ${w.userName}!`;
-            }
-            rootProfile.querySelector(".go-signup")
-              .addEventListener("click", () => {
-                rootProfile.querySelector(".signup")
-                  .classList.remove("is-hidden");
-                rootProfile.querySelector(".login")
-                  .classList.add("is-hidden");
-              });
-            rootProfile.querySelector(".go-login")
-              .addEventListener("click", () => {
-                rootProfile.querySelector(".login")
-                  .classList.remove("is-hidden");
-                rootProfile.querySelector(".signup")
-                  .classList.add("is-hidden");
-              });
-            rootProfile.querySelector(".profile button")
-              .addEventListener("click", () => {
-                w.logout();
-                rootProfile.querySelector(".login")
-                  .classList.remove("is-hidden");
-                rootProfile.querySelector(".profile")
-                  .classList.add("is-hidden");
-              })
-          });
+    .profile-content(
+        hx-trigger="load"
+        hx-swap="outerHTML"
+        hx-get=`${base}/profile/login`
+        hx-headers='js:{Authorization: new WorHou().bearer}')
+
+
