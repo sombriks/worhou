@@ -1,0 +1,26 @@
+include ../message
+
+mixin login()
+    +message('Log In',"is-success")
+        if block
+            block
+        form(hx-put=`${base}/profile/login`,
+            hx-target="closest .message",
+            hx-swap="outerHTML"
+            hx-encoding="application/x-www-form-urlencoded")
+            .field
+                label.label Email
+                .control
+                    input.input(type="email" name="email" placeholder="Email")/
+            .field
+                label.label Password
+                .control
+                    input.input(type="password" name="password" placeholder="Password")/
+            .field.is-grouped.is-grouped-right
+                input.button.is-primary(type="submit" value="Log In")/
+            .field.is-grouped.is-grouped-left
+                span
+                    | No account?
+                    a(hx-get=`${base}/profile/signup`
+                        hx-target="closest .message"
+                        hx-swap="outerHTML") create one

@@ -1,0 +1,6 @@
+include ../../components/shared/profile/signup
+include ../../components/shared/notification
++signup
+    if error
+        +notification('is-danger')
+            span= error

@@ -1,0 +1,8 @@
+include ../message
+
+mixin me()
+    +message("Profile")
+        | Login details
+        .field.is-grouped.is-grouped-right
+            button.button.is-warning(onclick="new WorHou().logout();window.location.reload();") Log out
+

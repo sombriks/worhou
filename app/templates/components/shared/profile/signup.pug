@@ -1,0 +1,32 @@
+include ../message
+
+mixin signup()
+    +message('Sign up', 'is-info')
+        if block
+            block
+        form(hx-post=`${base}/profile/signup`,
+            hx-target="closest .message",
+            hx-swap="outerHTML"
+            hx-encoding="application/x-www-form-urlencoded")
+            .field
+                label.label Name
+                .control
+                    input.input(type="text" name="name" placeholder="User name")/
+            .field
+                label.label Email
+                .control
+                    input.input(type="email" name="email" placeholder="Email")/
+            .field
+                label.label Password
+                .control
+                    input.input(type="password" name="password" placeholder="Password")/
+            .field.is-grouped.is-grouped-right
+                input.button.is-primary(type="submit" value="Sign up")/
+            .field.is-grouped.is-grouped-left
+                span
+                    | Have an account?
+                    a(hx-get=`${base}/profile/login`
+                        hx-target="closest .message"
+                        hx-swap="outerHTML") sign in
+
+
