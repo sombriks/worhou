@@ -4,12 +4,14 @@ import fastifyFormBody from '@fastify/formbody';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
+import jwt from 'jsonwebtoken';
 import pug from 'pug';
 import * as onboarding from '../controllers/onboarding.js';
 import * as timelog from '../controllers/timelog.js';
 import * as worksheet from '../controllers/worksheet.js';
 import * as teams from '../controllers/teams.js';
 import * as profile from '../controllers/profile.js';
+import auth from './auth.js';
 
 // Expose the server
 /** @type {import('fastify').FastifyInstance} */
@@ -22,7 +24,6 @@ fastify.register(fastifyFormBody);
 fastify.register(fastifyMultipart);
 
 // Expose frontend libraries
-
 const nodeModules = path.join(import.meta.dirname, '../../node_modules');
 const statics = {
 	[path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // Htmx/htmx.js
@@ -32,18 +33,16 @@ const statics = {
 	[path.join(nodeModules, '@mdi/font')]: '/mdi', // Mdi/7/css/materialdesignicons.css
 	[path.join(import.meta.dirname, '../static')]: '/static', // Atatic/worhou.css
 };
-
-let decorateReply = true;
+let isDecorateReply = true;
 for (const root in statics) {
 	const prefix = statics[root];
 	fastify.register(fastifyStatic, {
-		root, prefix, decorateReply,
+		root, prefix, decorateReply: isDecorateReply,
 	});
-	decorateReply = false;
+	isDecorateReply = false;
 }
 
 // Set up template engine
-
 fastify.register(fastifyView, {
 	root: path.join(import.meta.dirname, '../templates'),
 	defaultContext: {
@@ -53,8 +52,25 @@ fastify.register(fastifyView, {
 	engine: {pug},
 });
 
-// Wire routes with style
+// Custom request objects
+fastify.decorateRequest('tokenPayload', null);
+fastify.addHook('preHandler', async (request) => {
+	const bearerToken = request.headers.authorization;
+	if (!bearerToken) {
+		return;
+	}
+	const token = bearerToken.split(' ', 2)[1];
+	if (!token) {
+		return;
+	}
+	try {
+		request.tokenPayload = jwt.verify(token, auth.key);
+	} catch (error) {
+		request.log.warn(error);
+	}
+});
 
+// Wire routes with style
 const api = {
 	'/': {
 		get: onboarding.page,
@@ -74,6 +90,9 @@ const api = {
 		},
 		timelog: {
 			get: timelog.page,
+			'/today': {
+				get: timelog.today,
+			},
 		},
 		worksheet: {
 			get: worksheet.page,

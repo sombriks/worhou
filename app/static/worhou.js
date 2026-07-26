@@ -1,5 +1,5 @@
 /**
- * Details about the person already known in this browser
+ Details about the person already known in this browser
  */
 class WorHou {
 	static #instance;
@@ -56,7 +56,7 @@ class WorHou {
 
 	set token(token) {
 		this.#user.token = token;
-		const payload = token?.split('\.')[1];
+		const payload = token?.split('\.', 2)[1];
 		const detail = JSON.parse(atob(payload));
 		this.#user.name = detail?.sub?.name;
 		localStorage.setItem('user', JSON.stringify(this.#user));
@@ -70,23 +70,21 @@ class WorHou {
 }
 
 /**
- * Simple LOB hook
- * @param hobHook function to receive the current parent element containing the
- * script tag
+ Simple LOB hook
+ @param hobHook function to receive the current parent element containing the
+  script tag
  */
 const lobRoot = hobHook => {
-	(() => {
 		const element = document.currentScript.parentElement;
 		hobHook(element);
-	})();
 };
 
-// Final setup
-
-document.addEventListener('htmx:configRequest', evt => {
-	// Htmx.config.logAll = true;
-	const w = new WorHou();
-	if (w.token) {
-		evt.detail.headers.Authorization = `Bearer ${w.token}`;
+// Token setup
+htmx.registerExtension('hx-Authorization', {
+	htmx_before_request(elt, detail) {
+		const w = new WorHou();
+		if (w.bearer) {
+			detail.ctx.request.headers.Authorization = w.bearer;
+		}
 	}
 });

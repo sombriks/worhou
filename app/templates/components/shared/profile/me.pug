@@ -2,7 +2,14 @@ include ../message
 
 mixin me()
     +message("Profile")
-        | Login details
+        p Login details
         .field.is-grouped.is-grouped-right
-            button.button.is-warning(onclick="new WorHou().logout();window.location.reload();") Log out
+            button.button.is-warning Log out
+            script(type="text/javascript").
+                lobRoot(e => {
+                  e.querySelector('button').addEventListener('click', () => {
+                    new WorHou().logout();
+                    window.location.reload();
+                  });
+                });
 

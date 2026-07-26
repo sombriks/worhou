@@ -1,8 +1,8 @@
 import {LoginsTypes} from '../../models/logins.js';
 
 /**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
+ @param { import("knex").Knex } knex
+ @returns { Promise<void> }
  */
 export const up = async knex => {
 	const [returnValue] = await knex('users').insert({
@@ -17,8 +17,8 @@ export const up = async knex => {
 };
 
 /**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
+ @param { import("knex").Knex } knex
+ @returns { Promise<void> }
  */
 export const down = async knex => {
 	await knex('logins').del();

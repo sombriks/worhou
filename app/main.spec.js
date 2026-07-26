@@ -33,7 +33,7 @@ test.after.always(async () => {
 });
 
 /**
- * @param {import('ava').ExecutionContext} t
+ @param {import('ava').ExecutionContext} t
  */
 test('should get index/onboarding page', async t => {
 	const response = await fastify.inject({
@@ -46,7 +46,7 @@ test('should get index/onboarding page', async t => {
 });
 
 /**
- * @param {import('ava').ExecutionContext} t
+ @param {import('ava').ExecutionContext} t
  */
 test('should login', async t => {
 	const response = await fastify.inject({

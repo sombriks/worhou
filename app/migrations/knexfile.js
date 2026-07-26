@@ -7,7 +7,7 @@ const pool = {
 
 const migrations = {
 	extension: 'js',
-	stub: path.join(import.meta.dirname, 'migration.stup.js'),
+	stub: path.join(import.meta.dirname, 'migration.js.stub'),
 	directory: [
 		path.join(import.meta.dirname, 'common'),
 	],

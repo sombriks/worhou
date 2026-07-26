@@ -6,22 +6,12 @@ import {LoginsTypes} from '../models/logins.js';
 export const page = async (request, res) => res.view('pages/profile');
 
 export const me = async (request, response) => {
-	const bearerToken = request.headers.authorization;
-	if (!bearerToken) {
+	const {tokenPayload} = request;
+	if (!tokenPayload) {
 		return response.view('partials/profile/login');
 	}
 
-	const token = bearerToken.split(' ')[1];
-	if (!token) {
-		return response.view('partials/profile/login');
-	}
-
-	try {
-		jwt.verify(token, auth.key);
-		return response.view('partials/profile/me');
-	} catch (error) {
-		return response.view('partials/profile/login', {error});
-	}
+	return response.view('partials/profile/me');
 };
 
 export const createAccountForm = async (request, response) => response.view('partials/profile/signup');

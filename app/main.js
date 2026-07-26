@@ -9,7 +9,7 @@ fastify.listen({port}, error => {
 	if (error) {
 		fastify.log.error(error);
 		process.exit(1);
-	} else {
-		fastify.log.info('Server open to business!');
 	}
+
+	fastify.log.info('Server open to business!');
 });

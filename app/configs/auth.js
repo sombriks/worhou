@@ -26,7 +26,6 @@ export default {
 		const [salt, storedHash] = storedPwd.split(':');
 		const storedHashBuf = Buffer.from(storedHash, 'hex');
 		const newHashBuf = await pbkdf2(plainPwd, salt, ITERATIONS, KEYLEN, DIGEST);
-
 		if (newHashBuf.length !== storedHashBuf.length) {
 			return false;
 		}
