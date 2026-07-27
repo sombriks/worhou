@@ -56,6 +56,9 @@
     "pg": "^8.22.0",
     "pug": "^3.0.4"
   },
+  "c8": {
+    "reports-dir": ".coverage"
+  },
   "ava": {
     "timeout": "5m",
     "files": [

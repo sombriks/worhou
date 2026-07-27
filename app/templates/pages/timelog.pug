@@ -8,5 +8,6 @@ block content
         +message("Today's timelog", "is-info is-hidden", true)
             p(hx-trigger="load",
                 hx-swap="outerHTML",
+                hx-target="closest .message"
                 hx-get=`${base}/timelog/today`).
                 | loading...

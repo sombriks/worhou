@@ -54,7 +54,7 @@ fastify.register(fastifyView, {
 
 // Custom request objects
 fastify.decorateRequest('tokenPayload', null);
-fastify.addHook('preHandler', async (request) => {
+fastify.addHook('preHandler', async (request, reply) => {
 	const bearerToken = request.headers.authorization;
 	if (!bearerToken) {
 		return;
@@ -65,6 +65,10 @@ fastify.addHook('preHandler', async (request) => {
 	}
 	try {
 		request.tokenPayload = jwt.verify(token, auth.key);
+		reply.locals = {
+			...reply.locals,
+			tokenPayload: request.tokenPayload,
+		};
 	} catch (error) {
 		request.log.warn(error);
 	}

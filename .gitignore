@@ -148,3 +148,4 @@ vite.config.ts.timestamp-*
 .junie
 .nvmrc
 db.sqlite3
+.coverage

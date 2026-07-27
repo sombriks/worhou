@@ -1,13 +1,17 @@
-include ../message
+include ../shared/message
 
-mixin login()
-    +message('Log In',"is-success")
+mixin signup()
+    +message('Sign up', 'is-info')
         if block
             block
-        form(hx-put=`${base}/profile/login`,
+        form(hx-post=`${base}/profile/signup`,
             hx-target="closest .message",
             hx-swap="outerHTML"
             hx-encoding="application/x-www-form-urlencoded")
+            .field
+                label.label Name
+                .control
+                    input.input(type="text" name="name" placeholder="User name")/
             .field
                 label.label Email
                 .control
@@ -17,10 +21,12 @@ mixin login()
                 .control
                     input.input(type="password" name="password" placeholder="Password")/
             .field.is-grouped.is-grouped-right
-                input.button.is-primary(type="submit" value="Log In")/
+                input.button.is-primary(type="submit" value="Sign up")/
             .field.is-grouped.is-grouped-left
                 span
-                    | No account?
-                    a(hx-get=`${base}/profile/signup`
+                    | Have an account?
+                    a(hx-get=`${base}/profile/login`
                         hx-target="closest .message"
-                        hx-swap="outerHTML") create one
+                        hx-swap="outerHTML") sign in
+
+
