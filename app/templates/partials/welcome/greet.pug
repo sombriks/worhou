@@ -1,9 +1,10 @@
 include ../../components/shared/message
 
 +message("Welcome", "is-success")
-    p=`Hello, ${user.name}!`
+    .title=`Hello, ${user.name}!`
     p
         script(type="text/javascript").
+            // frontend part
             lobRoot(e => {
               const w = new WorHou();
               if(w.visits) {
@@ -13,3 +14,5 @@ include ../../components/shared/message
                 e.innerHTML = "Are you new here?";
               }
             });
+    p
+        a(href=`${base}/timelog`) Check out your timelog

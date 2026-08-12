@@ -1,1 +1,7 @@
-p unlogged
+include ../../components/shared/message
+
++message("Welcome", "is-success")
+    .title=`Hello, Stranger`
+    p
+    | How about to #[a(href=`${base}/profile`) create an account]?
+    | It's free!
