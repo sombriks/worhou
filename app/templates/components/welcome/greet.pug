@@ -1,0 +1,6 @@
+include ../shared/message
+
+mixin greet
+    div(hx-get=`${base}/welcome`
+        hx-swap="outerHTML"
+        hx-trigger="load") ...

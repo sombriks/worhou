@@ -1,0 +1,15 @@
+include ../../components/shared/message
+
++message("Welcome", "is-success")
+    p=`Hello, ${user.name}!`
+    p
+        script(type="text/javascript").
+            lobRoot(e => {
+              const w = new WorHou();
+              if(w.visits) {
+                e.innerHTML = "welcome back!";
+              } else {
+                w.incrementVisits();
+                e.innerHTML = "Are you new here?";
+              }
+            });

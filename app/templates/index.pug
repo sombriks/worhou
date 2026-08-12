@@ -1,48 +1,7 @@
 extends ./layouts/main
-include components/shared/message
+include components/welcome/about
+include components/welcome/greet
 
 block content
-    +message("Welcome","is-success")
-        p.title ...
-        p.subtitle ...
-        p.logins.is-hidden
-            | How about to #[a(href=`${base}/profile`) setup an account]? it's free!!
-        script(type="text/javascript").
-          lobRoot(message => {
-            const w = new WorHou();
-            message.querySelector('p.title').innerText = `Hello, ${w.userName}!`;
-
-            if (w.visits > 0) {
-              message.querySelector('p.subtitle').innerText = "Welcome back!";
-            } else {
-              message.querySelector('p.subtitle').innerText = "Are you new Here?!";
-            }
-            w.incrementVisits();
-
-            if (!w.logged) {
-              message.querySelector('p.logins').classList.remove('is-hidden');
-            }
-          });
-    +message("What is WorHou?","is-info")
-        p #[b WorHou] is a #[i time logging] application.
-        p It helps you to track time, build reports from it
-        p and even share it across teams.
-    +message("Timelog", "is-warning", true)
-        p Please #[a(href=`${base}/profile`) login] to be able
-        p to #[i clock in / clock out].
-        script(type="text/javascript").
-          lobRoot(message => {
-            const w = new WorHou();
-            if (w.logged) {
-              message.parentElement.remove();
-            }
-          })
-    +message('Timelog','is-primary')
-        p Chek out your #[a(href=`${base}/timelog`) timelog]
-        script(type="text/javascript").
-          lobRoot(message => {
-            const w = new WorHou();
-            if (!w.logged) {
-              message.parentElement.remove();
-            }
-          });
+    +greet
+    +about

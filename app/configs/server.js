@@ -98,6 +98,9 @@ const api = {
 				get: timelog.today,
 			},
 		},
+		welcome: {
+			get: onboarding.welcome,
+		},
 		worksheet: {
 			get: worksheet.page,
 		},
