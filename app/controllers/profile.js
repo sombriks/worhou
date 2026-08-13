@@ -6,8 +6,8 @@ import {LoginsTypes} from '../models/logins.js';
 export const page = async (request, res) => res.view('pages/profile');
 
 export const me = async (request, response) => {
-	const {tokenPayload} = request;
-	if (!tokenPayload) {
+	const {user} = request;
+	if (!user) {
 		return response.view('partials/profile/login');
 	}
 

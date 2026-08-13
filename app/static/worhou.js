@@ -75,8 +75,8 @@ class WorHou {
   script tag
  */
 const lobRoot = hobHook => {
-		const element = document.currentScript.parentElement;
-		hobHook(element);
+	const element = document.currentScript.parentElement;
+	hobHook(element);
 };
 
 // Token setup
@@ -86,5 +86,5 @@ htmx.registerExtension('hx-Authorization', {
 		if (w.bearer) {
 			detail.ctx.request.headers.Authorization = w.bearer;
 		}
-	}
+	},
 });

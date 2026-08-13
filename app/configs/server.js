@@ -53,21 +53,24 @@ fastify.register(fastifyView, {
 });
 
 // Custom request objects
-fastify.decorateRequest('tokenPayload', null);
+fastify.decorateRequest('user', null);
 fastify.addHook('preHandler', async (request, reply) => {
 	const bearerToken = request.headers.authorization;
 	if (!bearerToken) {
 		return;
 	}
+
 	const token = bearerToken.split(' ', 2)[1];
 	if (!token) {
 		return;
 	}
+
 	try {
-		request.tokenPayload = jwt.verify(token, auth.key);
+		const payload = jwt.verify(token, auth.key);
+		request.user = payload.sub;
 		reply.locals = {
 			...reply.locals,
-			tokenPayload: request.tokenPayload,
+			user: request.user,
 		};
 	} catch (error) {
 		request.log.warn(error);
@@ -97,6 +100,9 @@ const api = {
 			'/today': {
 				get: timelog.today,
 			},
+			'/clock-in': {
+				post: timelog.clockIn,
+			}
 		},
 		welcome: {
 			get: onboarding.welcome,

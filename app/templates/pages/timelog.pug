@@ -4,10 +4,8 @@ include ../components/shared/message
 block head
     title Timelog
 block content
-    .timelog-content
-        +message("Today's timelog", "is-info is-hidden", true)
-            p(hx-trigger="load",
-                hx-swap="outerHTML",
-                hx-target="closest .message"
-                hx-get=`${base}/timelog/today`).
-                | loading...
+    .timelog-content(
+        hx-trigger="load",
+        hx-swap="outerHTML",
+        hx-get=`${base}/timelog/today`).
+        | loading...

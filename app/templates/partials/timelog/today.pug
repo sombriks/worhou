@@ -1,0 +1,12 @@
+include ../../components/shared/message
+
++message(`Timelogs for ${day}`, "is-info today-stamps")
+    each s in stamps
+        .clockstamp=format(s.stamp, 'HH:mm')
+    if !stamps || stamps.length == 0
+      i.is-text.is-warning nothing clocked today
+    .field.is-grouped.p-4
+        button.button(
+            hx-swap="outerHTML"
+            hx-target="closest .today-stamps"
+            hx-post=`${base}/timelog/clock-in`) Clock-in now
