@@ -102,7 +102,10 @@ const api = {
 			},
 			'/clock-in': {
 				post: timelog.clockIn,
-			}
+			},
+			'/:id': {
+				get: timelog.detail,
+			},
 		},
 		welcome: {
 			get: onboarding.welcome,
