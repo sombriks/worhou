@@ -1,0 +1,9 @@
+mixin clock-stamp(stamp, hour)
+    .is-flex.is-justify-items-center.is-align-items-center.m-2.is-gap-1
+        div.is-flex-grow-1=hour
+        button.button(title="Details")
+            span.icon
+                i.mdi.mdi-eye
+        button.button(title="Correction")
+            span.icon
+                i.mdi.mdi-pencil

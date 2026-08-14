@@ -24,6 +24,6 @@ export const clockIn = async (request, res) => {
     return res.view('partials/please-login');
   }
   await database.db('timelogs')
-    .insert({owner_id: user.id, stamp: new Date()});
+    .insert({owner_id: user.id, stamp: new Date(), creator_id: user.id});
   return res.code(303).redirect('/timelog/today')
 }
