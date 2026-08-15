@@ -6,11 +6,12 @@ import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
 import jwt from 'jsonwebtoken';
 import pug from 'pug';
-import * as onboarding from '../controllers/onboarding.js';
-import * as timelog from '../controllers/timelog.js';
-import * as worksheet from '../controllers/worksheet.js';
-import * as teams from '../controllers/teams.js';
-import * as profile from '../controllers/profile.js';
+import {format} from 'date-fns';
+import * as onboarding from '#controllers/onboarding.js';
+import * as timelog from '#controllers/timelog.js';
+import * as worksheet from '#controllers/worksheet.js';
+import * as teams from '#controllers/teams.js';
+import * as profile from '#controllers/profile.js';
 import auth from './auth.js';
 
 // Expose the server
@@ -47,6 +48,9 @@ fastify.register(fastifyView, {
 	root: path.join(import.meta.dirname, '../templates'),
 	defaultContext: {
 		base: process.env.BASE_URL ?? '',
+		dateFns: {
+			format,
+		},
 	},
 	viewExt: 'pug',
 	engine: {pug},
@@ -105,6 +109,7 @@ const api = {
 			},
 			'/:id': {
 				get: timelog.detail,
+				put: timelog.update,
 			},
 		},
 		welcome: {

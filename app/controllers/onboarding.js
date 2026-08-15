@@ -5,5 +5,6 @@ export const welcome = async (request, res) => {
 	if (user) {
 		return res.view('partials/welcome/greet');
 	}
+
 	return res.view('partials/welcome/unlogged');
 };

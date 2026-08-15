@@ -138,8 +138,10 @@ using the [knex schema][knex-schema] api to evolve the database.
 - Fastify [inject][fastify-inject] makes testing pretty neat.
 - [Locality Of Behavior][lob] first, Single [Responsibility Principle][srp]
   when there are too many concerns.
--
+- [Subpath patterns][subpath] are cool.
+- 
 
 [fastify-inject]: https://fastify.dev/docs/latest/Guides/Testing/
 [lob]: https://htmx.org/essays/locality-of-behaviour/
 [srp]: https://en.wikipedia.org/wiki/Single-responsibility_principle
+[subpath]: https://nodejs.org/api/packages.html#subpath-patterns

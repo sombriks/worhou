@@ -16,6 +16,11 @@
   "engines": {
     "node": ">=24"
   },
+  "imports": {
+    "#controllers/*.js": "./app/controllers/*.js",
+    "#models/*": "./app/models/*",
+    "#services/*": "./app/services/*"
+  },
   "scripts": {
     "db:up": "docker compose -f app/infra/database.yml up",
     "db:down": "docker compose -f app/infra/database.yml down",

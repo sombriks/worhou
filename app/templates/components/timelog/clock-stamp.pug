@@ -7,6 +7,9 @@ mixin clock-stamp(stamp, hour)
             hx-get=`${base}/timelog/${stamp.id}`)
             span.icon
                 i.mdi.mdi-eye
-        button.button(title="Correction")
+        button.button(title="Correction"
+            hx-target="body"
+            hx-swap="append"
+            hx-get=`${base}/timelog/${stamp.id}?edit=true`)
             span.icon
                 i.mdi.mdi-pencil

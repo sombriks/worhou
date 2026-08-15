@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import auth from '../configs/auth.js';
 import database from '../configs/database.js';
-import {LoginsTypes} from '../models/logins.js';
+import {LoginsTypesValues} from '../models/logins_types.js';
 
 export const page = async (request, res) => res.view('pages/profile');
 
@@ -54,7 +54,7 @@ export const signup = async (request, res) => {
 			.insert({
 				users_id: returnValue.id,
 				identifier: email,
-				logins_types_id: LoginsTypes.EMAIL,
+				logins_types_id: LoginsTypesValues.EMAIL,
 				password: await auth.hash(password),
 			});
 	});

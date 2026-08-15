@@ -1,0 +1,33 @@
+include ../../components/shared/message
+include ../../components/shared/modal
+
++modal
+    +message(`Edit tmelog from ${dateFns.format(timelog.stamp, 'yyyy-MM-dd HH:mm')}`,'is-info')
+        form(hx-put=`${base}/timelog/${timelog.id}`)
+            .field
+                .control
+                    label.checkbox(for="deactivate")
+                        input#deactivate(
+                            type="checkbox"
+                            name="deactivate")
+                        | Just inactivate this one
+            .field
+                label.label(for="time") Time
+                .control
+                    input.input#time(
+                        type="time"
+                        name="time"
+                        required="required"
+                        value=`${dateFns.format(timelog.stamp, 'HH:mm')}`)/
+            .fueld
+                label.label(for="note") Reason for this change
+                .control
+                    textarea.textarea#note(
+                        name="note"
+                        required="required")=timelog.note
+                    br
+            .field.is-grouped.is-grouped-right
+                .control
+                    input.button.is-success(
+                        type="submit"
+                        value="Update timelog")

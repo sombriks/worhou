@@ -1,5 +1,6 @@
-export const LoginsTypes = Object.freeze({
-	LOCAL: 1,
-	EMAIL: 2,
-	GOOGLE: 3,
-});
+import {Base} from "./_base.js";
+
+export const Logins = Object.freeze({
+  ...Base,
+  _name: 'logins'
+})
