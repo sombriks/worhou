@@ -21,6 +21,7 @@ Working hours sample app
     - htmx
     - bulma
     - date-fns
+  - alpinejs
 - Test & Lint frameworks
     - testcontainers
     - ava
@@ -51,7 +52,7 @@ npm i -D ava c8 js-yaml xo
 npm i pg knex
 npm i fastify @fastify/view @fastify/static @fastify/websocket
 npm i pug htmx.org@4.0.0-beta5 bulma
-npm i @date-fns/cdn date-fns
+npm i @date-fns/cdn date-fns alpinejs
 ```
 
 Initial skeleton:

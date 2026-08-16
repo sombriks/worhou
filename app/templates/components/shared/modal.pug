@@ -1,13 +1,9 @@
 mixin modal
-    .modal.is-active
+    .modal.is-active(x-data="{}")
         .modal-background
         .modal-content
             if block
                 block
         button.modal-close.is-large(
-            aria-label="close")
-        script(type="text/javascript").
-          lobRoot(m => {
-            const b = m.querySelector('button.modal-close.is-large');
-            b.onclick = () => m.parentElement.removeChild(m);
-          })
+            aria-label="close"
+            @click="$el.closest('.modal').remove()")

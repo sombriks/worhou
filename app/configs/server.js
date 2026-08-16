@@ -27,12 +27,13 @@ fastify.register(fastifyMultipart);
 // Expose frontend libraries
 const nodeModules = path.join(import.meta.dirname, '../../node_modules');
 const statics = {
-	[path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // Htmx/htmx.js
-	[path.join(nodeModules, 'bulma/css')]: '/bulma', // Bulma/bulma.css
-	[path.join(nodeModules, '@date-fns/cdn')]: '/date-fns', // Date-fns/cdn.js
-	[path.join(nodeModules, 'jwt-decode/build/cjs')]: '/jwt-decode', // Jwt-decode/index.js
-	[path.join(nodeModules, '@mdi/font')]: '/mdi', // Mdi/7/css/materialdesignicons.css
-	[path.join(import.meta.dirname, '../static')]: '/static', // Atatic/worhou.css
+	[path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // -htmx/htmx.js
+	[path.join(nodeModules, 'bulma/css')]: '/bulma', // -bulma/bulma.css
+	[path.join(nodeModules, '@date-fns/cdn')]: '/date-fns', // -date-fns/cdn.js
+	[path.join(nodeModules, 'jwt-decode/build/cjs')]: '/jwt-decode', // -jwt-decode/index.js
+	[path.join(nodeModules, '@mdi/font')]: '/mdi', // -mdi/css/materialdesignicons.css
+	[path.join(nodeModules, 'alpinejs/dist')]: '/alpinejs', // -alpinejs/cdn.js
+	[path.join(import.meta.dirname, '../static')]: '/static', // -static/worhou.css
 };
 let isDecorateReply = true;
 for (const root in statics) {
