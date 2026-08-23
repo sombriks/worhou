@@ -1,4 +1,4 @@
-import {endOfDay, format, parse, startOfDay} from 'date-fns';
+import {endOfDay, format, parse, startOfDay,} from 'date-fns';
 import database from '../configs/database.js';
 
 export const page = async (request, res) => res.view('pages/timelog');
@@ -59,19 +59,21 @@ export const update = async (request, res) => {
   const {id} = request.params;
   const {deactivate, time, note} = request.body;
 
-  const newStamp = `${format(new Date(), 'yyyy-MM-dd')} ${time}`
+  const newStamp = `${format(new Date(), 'yyyy-MM-dd')} ${time}`;
   const stamp = parse(newStamp, 'yyyy-MM-dd HH:mm', new Date());
 
-  const justCancel = 'on' === deactivate;
+  const isJustCancel = deactivate === 'on';
 
   await database.db.transaction(async tx => {
     const result = await tx('timelogs')
       .where({id, owner_id: user.id})
       .update({note, cancelled_at: new Date()});
 
-    if (!justCancel) {
+    if (!isJustCancel) {
       const result2 = await tx('timelogs')
-        .insert({stamp, owner_id: user.id, creator_id: user.id, replaced_id: id})
+        .insert({
+          stamp, owner_id: user.id, creator_id: user.id, replaced_id: id,
+        })
         .returning('id');
     }
   });

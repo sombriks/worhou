@@ -1,14 +1,9 @@
 mixin notification(cls='is-info')
-    .notification.is-textAlign-center.py-6(class=cls)
-        button.delete
+    .notification.is-textAlign-center.py-6(x-data="{}" class=cls)
+        button.delete(
+            aria-label="close"
+            @click="$el.closest('.notification').remove()")
         if block
             block
         else
             i -
-        script(type="text/javascript").
-          lobRoot(notification => {
-            notification.querySelector('button')
-              .addEventListener('click', () =>
-                notification.remove());
-          });
-

@@ -2,17 +2,8 @@ include ../../components/shared/message
 
 +message("Welcome", "is-success")
     .title=`Hello, ${user.name}!`
-    p
-        script(type="text/javascript").
-            // frontend part
-            lobRoot(e => {
-              const w = new WorHou();
-              if(w.visits) {
-                e.innerHTML = "welcome back!";
-              } else {
-                w.incrementVisits();
-                e.innerHTML = "Are you new here?";
-              }
-            });
+    p(x-data="{}"
+        x-init="new WorHou().incrementVisits()")
+        span(x-text="new WorHou().visits > 1 ? 'Welcome Back!' : 'Are you new here?'") ...
     p
         a(href=`${base}/timelog`) Check out your timelog

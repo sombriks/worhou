@@ -1,6 +1,6 @@
 import {LoginsTypesValues} from '#models/logins_types.js';
-import {Users} from "#models/users.js";
-import {Logins} from "#models/logins.js";
+import {Users} from '#models/users.js';
+import {Logins} from '#models/logins.js';
 
 /**
  @param { import("knex").Knex } knex

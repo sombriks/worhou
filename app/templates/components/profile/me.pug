@@ -3,13 +3,6 @@ include ../shared/message
 mixin me()
     +message("Profile")
         p Login details
-        .field.is-grouped.is-grouped-right
-            button.button.is-warning Log out
-            script(type="text/javascript").
-                lobRoot(e => {
-                  e.querySelector('button').addEventListener('click', () => {
-                    new WorHou().logout();
-                    window.location.reload();
-                  });
-                });
-
+        .field.is-grouped.is-grouped-right(x-data="{}")
+            button.button.is-warning(
+                @click="new WorHou().logout()") Log out

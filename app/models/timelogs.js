@@ -1,6 +1,6 @@
-import {Base} from "./_base.js";
+import {Base} from './_base.js';
 
 export const Timelogs = Object.freeze({
   ...Base,
-  _name: 'timelogs'
-})
+  _name: 'timelogs',
+});

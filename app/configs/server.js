@@ -7,12 +7,12 @@ import fastifyView from '@fastify/view';
 import jwt from 'jsonwebtoken';
 import pug from 'pug';
 import {format} from 'date-fns';
+import auth from './auth.js';
 import * as onboarding from '#controllers/onboarding.js';
 import * as timelog from '#controllers/timelog.js';
 import * as worksheet from '#controllers/worksheet.js';
 import * as teams from '#controllers/teams.js';
 import * as profile from '#controllers/profile.js';
-import auth from './auth.js';
 
 // Expose the server
 /** @type {import('fastify').FastifyInstance} */

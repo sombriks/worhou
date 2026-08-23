@@ -1,11 +1,9 @@
-import {LoginsTypes} from "#models/logins_types.js";
-
 /**
  @param { import("knex").Knex } knex
  @returns { Promise<void> }
  */
 export const up = async knex => {
-	await knex(LoginsTypes._name).insert([
+  await knex('logins_types').insert([
 		{description: 'local'},
 		{description: 'email'},
 		{description: 'google'},
@@ -17,5 +15,5 @@ export const up = async knex => {
  @returns { Promise<void> }
  */
 export const down = async knex => {
-	await knex(LoginsTypes._name).del();
+  await knex('logins_types').del();
 };

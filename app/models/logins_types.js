@@ -1,4 +1,4 @@
-import {Base} from './_base.js'
+import {Base} from './_base.js';
 
 export const LoginsTypes = Object.freeze({
   ...Base,

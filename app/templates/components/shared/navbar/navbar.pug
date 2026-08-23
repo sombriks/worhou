@@ -2,36 +2,34 @@
 include ./navbar-item
 
 mixin navbar()
-    nav.navbar(role="navigation" aria-label="main navigation")
+    nav.navbar(
+        x-data="{ open: false }"
+        role="navigation"
+        aria-label="main navigation"
+    )
         .navbar-brand
-            a.navbar-item.font-weight-bold(href=`${base}/`)
+            a.navbar-item.font-weight-bold(
+                href=`${base}/`
+                :class=`{ 'is-active': window.location.pathname === '${base}/' }`
+            )
                 span.mdi.mdi-clock-outline(style="font-size:2rem;")
-                script(type="text/javascript").
-                  lobRoot(nvItem => {
-                    const h1 = window.location.href;
-                    const h2 = nvItem.href;
-                    if (h1 === h2) {
-                      nvItem.classList.add("is-active");
-                    }
-                  });
-            a.navbar-burger(role="button" aria-label="menu" aria-expanded="false")
+
+            a.navbar-burger(
+                role="button"
+                aria-label="menu"
+                :aria-expanded="open.toString()"
+                :class="{ 'is-active': open }"
+                @click="open = !open"
+            )
                 span(aria-hidden="true")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
                 span(aria-hidden="true")
-        .navbar-menu
+
+        .navbar-menu(:class="{ 'is-active': open }")
             .navbar-start
-                +navbar-item("Timelog",`${base}/timelog`,"mdi mdi-clock-outline")
-                +navbar-item("Worksheet",`${base}/worksheet`,"mdi mdi-text-box-check-outline")
+                +navbar-item("Timelog", `${base}/timelog`, "mdi mdi-clock-outline")
+                +navbar-item("Worksheet", `${base}/worksheet`, "mdi mdi-text-box-check-outline")
             .navbar-end
-                +navbar-item("Teams",`${base}/teams`,"mdi mdi-account-group-outline")
-                +navbar-item("Profile",`${base}/profile`,"mdi mdi-account-circle")
-        script(type="text/javascript").
-          lobRoot(nav => {
-            const burger = nav.querySelector('.navbar-burger');
-            const menu = nav.querySelector('.navbar-menu');
-            burger.addEventListener('click', () => {
-              burger.classList.toggle('is-active');
-              menu.classList.toggle('is-active');
-            });
-          });
+                +navbar-item("Teams", `${base}/teams`, "mdi mdi-account-group-outline")
+                +navbar-item("Profile", `${base}/profile`, "mdi mdi-account-circle")

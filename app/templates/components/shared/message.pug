@@ -1,17 +1,11 @@
 mixin message(title='', cls='', closable=false)
-    .message.is-inline-block.p-3(class=cls)
+    .message.is-inline-block.p-3(x-data="{}" class=cls)
         .message-header
             p=title
             if closable
-                button.delete
-        if closable
-            script(type="text/javascript").
-                lobRoot(e => {
-                  const b = e.querySelector('.delete');
-                  b.addEventListener('click', () => {
-                    e.remove();
-                  });
-                });
+                button.delete(
+                    aria-label="close"
+                    @click="$el.closest('.message').remove()")
         .message-body
             if block
                 block

@@ -66,18 +66,9 @@ class WorHou {
 		this.#user.token = undefined;
 		this.#user.name = 'Stranger';
 		localStorage.setItem('user', JSON.stringify(this.#user));
+		window.location.reload();
 	}
 }
-
-/**
- Simple LOB hook
- @param hobHook function to receive the current parent element containing the
-  script tag
- */
-const lobRoot = hobHook => {
-	const element = document.currentScript.parentElement;
-	hobHook(element);
-};
 
 // Token setup
 htmx.registerExtension('hx-Authorization', {

@@ -1,7 +1,3 @@
-import {LoginsTypes} from '#models/logins_types.js';
-import {Users} from "#models/users.js";
-import {Logins} from "#models/logins.js";
-import {Timelogs} from "#models/timelogs.js";
 
 /**
  @param { import("knex").Knex } knex
@@ -14,9 +10,9 @@ export const up = async knex => {
 		table.string('name').notNullable();
 		table.timestamps(true, true);
 	});
-	await knex.schema.createTable(LoginsTypes._name, table => {
-		table.increments(LoginsTypes.id).primary();
-		table.string(LoginsTypes.description).notNullable().unique();
+  await knex.schema.createTable('logins_types', table => {
+    table.increments('id').primary();
+    table.string('description').notNullable().unique();
 		table.timestamps(true, true);
 	});
 	await knex.schema.createTable('logins', table => {
@@ -48,8 +44,8 @@ export const up = async knex => {
  @returns { Promise<void> }
  */
 export const down = async knex => {
-	await knex.schema.dropTable(Timelogs._name);
-	await knex.schema.dropTable(Logins._name);
-	await knex.schema.dropTable(LoginsTypes._name);
-	await knex.schema.dropTable(Users._name);
+  await knex.schema.dropTable('timelogs');
+  await knex.schema.dropTable('logins');
+  await knex.schema.dropTable('logins_types');
+  await knex.schema.dropTable('users');
 };
