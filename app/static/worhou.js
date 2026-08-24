@@ -66,7 +66,7 @@ class WorHou {
 		this.#user.token = undefined;
 		this.#user.name = 'Stranger';
 		localStorage.setItem('user', JSON.stringify(this.#user));
-		window.location.reload();
+    globalThis.location.reload();
 	}
 }
 

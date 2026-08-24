@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
-import auth from '../configs/auth.js';
-import database from '../configs/database.js';
-import {LoginsTypesValues} from '../models/logins_types.js';
+import auth from '#configs/auth.js';
+import database from '#configs/database.js';
+import {LoginsTypesValues} from '#models/logins_types.js';
+import {Logins} from '#models/logins.js';
+import {Users} from '#models/users.js';
 
 export const page = async (request, res) => res.view('pages/profile');
 
@@ -18,8 +20,8 @@ export const createAccountForm = async (request, response) => response.view('par
 
 export const login = async (request, res) => {
 	const {email, password} = request.body;
-	const login = await database.db('logins')
-		.where({identifier: email}).first();
+	const login = await database.db(Logins._name)
+		.where({[Logins.identifier]: email}).first();
 	if (!login) {
 		return res.view('partials/profile/login', {error: 'Invalid email or password'});
 	}
@@ -28,8 +30,8 @@ export const login = async (request, res) => {
 		return res.view('partials/profile/not-found.pug');
 	}
 
-	const user = await database.db('users')
-		.where({id: login.users_id}).first();
+	const user = await database.db(Users._name)
+		.where({[Users.id]: login.users_id}).first();
 	if (!user) {
 		return res.view('partials/profile/not-found.pug');
 	}
@@ -41,24 +43,26 @@ export const login = async (request, res) => {
 
 export const signup = async (request, res) => {
 	const {name, email, password} = request.body;
-	const exists = await database.db('logins')
-		.where({identifier: email}).first();
+	const exists = await database.db(Logins._name)
+		.where({[Logins.identifier]: email}).first();
 	if (exists) {
 		return res.view('partials/profile/signup.pug', {error: 'Email already in use'});
 	}
 
+	let users_id;
 	await database.db.transaction(async tx => {
-		const [returnValue] = await tx('users')
-			.insert({name}).returning('id');
-		await tx('logins')
+		const [returnValue] = await tx(Users._name)
+			.insert({name}).returning(Users.id);
+		users_id = returnValue[Users.id];
+		await tx(Logins._name)
 			.insert({
-				users_id: returnValue.id,
-				identifier: email,
-				logins_types_id: LoginsTypesValues.EMAIL,
-				password: await auth.hash(password),
+				[Logins.users_id]: users_id,
+				[Logins.identifier]: email,
+				[Logins.logins_types_id]: LoginsTypesValues.EMAIL,
+				[Logins.password]: await auth.hash(password),
 			});
 	});
-	const payload = {sub: {name}, iss: 'WorHou', aud: 'WorHou'};
+	const payload = {sub: {id: users_id, name}, iss: 'WorHou', aud: 'WorHou'};
 	const token = jwt.sign(payload, auth.key, {expiresIn: '1h'});
 	return res.view('partials/profile/set-token.pug', {token});
 };
