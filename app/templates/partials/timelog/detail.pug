@@ -1,4 +1,9 @@
+include ../../components/shared/message
 include ../../components/shared/modal
+include ../../components/shared/key-val
 
 +modal
-    p=timelog.stamp
+    .is-flex.is-justify-content-center(x-data)
+        +message('Timelog details', 'is-info', true,{"@click": "$el.closest('.modal').remove()"})
+            +key-val('Clock time', format(timelog.stamp, 'yyyy-MM-dd HH:mm'))
+            +key-val('Created by')

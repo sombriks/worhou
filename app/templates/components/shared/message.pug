@@ -1,11 +1,9 @@
-mixin message(title='', cls='', closable=false)
+mixin message(title='', cls='', closable=false, closeFn={"@click":"$el.closest('.message').remove()"})
     .message.is-inline-block.p-3(x-data="{}" class=cls)
         .message-header
             p=title
             if closable
-                button.delete(
-                    aria-label="close"
-                    @click="$el.closest('.message').remove()")
+                button.delete(aria-label="close")&attributes(closeFn)
         .message-body
             if block
                 block
