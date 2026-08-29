@@ -84,7 +84,7 @@ export const update = async (request, res) => {
           [Timelogs.stamp]: stamp,
           [Timelogs.owner_id]: user.id,
           [Timelogs.creator_id]: user.id,
-          [Timelogs.replaced_id]: id
+          [Timelogs.replaced_id]: id,
         })
         .returning(Timelogs.id);
     }

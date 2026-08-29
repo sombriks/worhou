@@ -62,17 +62,47 @@ test('should login', async t => {
 	t.regex(response.body, /token/i);
 });
 
-test('should sign up', async t => {
-	const response = await fastify.inject({
+test('should create user, save timelog and list result', async t => {
+  const email = `timelog-${Date.now()}@example.com`;
+
+  const signupResponse = await fastify.inject({
 		method: 'POST',
 		url: '/profile/signup',
 		body: {
-			name: 'test2',
-			email: 'test2@example.com',
+      name: 'Timelog Test User',
+      email,
 			password: 'e1e2e3e4',
 		},
 	});
 
-	t.is(response.statusCode, 200);
-	t.regex(response.body, /token/i);
+  t.is(signupResponse.statusCode, 200);
+
+  const token = signupResponse.body.match(/w\.token = '([^']+)'/)?.[1];
+
+  t.truthy(token);
+
+  const clockInResponse = await fastify.inject({
+    method: 'POST',
+    url: '/timelog/clock-in',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  t.is(clockInResponse.statusCode, 303);
+  t.is(clockInResponse.headers.location, '/timelog/today');
+
+  const todayResponse = await fastify.inject({
+    method: 'GET',
+    url: '/timelog/today',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  t.is(todayResponse.statusCode, 200);
+  t.regex(todayResponse.body, /timelogs for/i);
+  t.regex(todayResponse.body, /\d{2}:\d{2}/);
+  t.notRegex(todayResponse.body, /nothing clocked today/i);
 });
+
