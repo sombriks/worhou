@@ -1,5 +1,34 @@
 extends ../layouts/main
 
+include ../components/shared/message
+include ../components/shared/key-val
+
 block head
     title Timesheet
-    
+block content
+    .is-flex-grow-1
+        // missing filter
+    +message('My Working Hours','is-info is-flex-grow-2')
+        details
+            summary.is-flex
+                +key-val('2026-08-20', '08:00', {'class': 'is-flex-grow-1'})
+            .fixed-grid.has-4-cols
+                .grid
+                    .cell(style={'white-space': 'nowrap'}) 08:00 - 12:00
+                    .cell(style={'white-space': 'nowrap'}) 13:00 - 17:00
+        details
+            summary.is-flex
+                +key-val('2026-08-21', '08:00', {class: 'is-flex-grow-1'})
+            .fixed-grid.has-4-cols
+                .grid
+                    .cell(style={'white-space': 'nowrap'}) 08:00 - 12:00
+                    .cell(style={'white-space': 'nowrap'}) 13:00 - 17:00
+        details
+            summary.is-flex
+                +key-val('2026-08-22', '08:00', {class: 'is-flex-grow-1'})
+            .fixed-grid.has-4-cols
+                .grid
+                    .cell(style={'white-space': 'nowrap'}) 08:00 - 12:00
+                    .cell(style={'white-space': 'nowrap'}) 13:00 - 17:00
+    .is-flex-grow-1
+        // missing totals

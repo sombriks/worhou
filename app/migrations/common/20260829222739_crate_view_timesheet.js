@@ -20,10 +20,9 @@ export const up = async knex => knex.raw(`
            per_day_sheet as
                (select *,
                        count(*) over (partition by owner_id, day order by day, hour) as day_period,
-                       (extract(epoch from (hour - prev_hour)) / 3600.0)             as intv
+                       extract(epoch from (hour - prev_hour)) / 3600.0               as intv
                 from ordered_sheet
-                where day = prev_day
-                order by day, hour),
+                where day = prev_day),
            intervaled_sheet as
                (select *
                 from per_day_sheet
