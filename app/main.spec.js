@@ -42,7 +42,7 @@ test('should get index/onboarding page', async t => {
 	});
 
 	t.is(response.statusCode, 200);
-	t.regex(response.payload, /welcome/i);
+  t.regex(response.payload, /welcome/iv);
 });
 
 /**
@@ -59,7 +59,7 @@ test('should login', async t => {
 	});
 
 	t.is(response.statusCode, 200);
-	t.regex(response.body, /token/i);
+  t.regex(response.body, /token/iv);
 });
 
 test('should create user, save timelog and list result', async t => {
@@ -77,7 +77,7 @@ test('should create user, save timelog and list result', async t => {
 
   t.is(signupResponse.statusCode, 200);
 
-  const token = signupResponse.body.match(/w\.token = '([^']+)'/)?.[1];
+  const token = signupResponse.body.match(/w\.token = '([^']+)'/v)?.[1];
 
   t.truthy(token);
 
@@ -101,8 +101,8 @@ test('should create user, save timelog and list result', async t => {
   });
 
   t.is(todayResponse.statusCode, 200);
-  t.regex(todayResponse.body, /timelogs for/i);
-  t.regex(todayResponse.body, /\d{2}:\d{2}/);
-  t.notRegex(todayResponse.body, /nothing clocked today/i);
+  t.regex(todayResponse.body, /timelogs for/iv);
+  t.regex(todayResponse.body, /\d{2}:\d{2}/v);
+  t.notRegex(todayResponse.body, /nothing clocked today/iv);
 });
 

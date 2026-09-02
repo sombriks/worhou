@@ -8,7 +8,7 @@ fastify.log.info('Starting server...');
 fastify.listen({port}, error => {
 	if (error) {
 		fastify.log.error(error);
-		process.exit(1);
+    throw error;
 	}
 
 	fastify.log.info('Server open to business!');

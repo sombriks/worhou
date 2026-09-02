@@ -5,48 +5,48 @@ import {LoginsTypesValues} from '#models/logins_types.js';
 import {Logins} from '#models/logins.js';
 import {Users} from '#models/users.js';
 
-export const page = async (request, res) => res.view('pages/profile');
+export const page = async (request, reply) => reply.view('pages/profile');
 
-export const me = async (request, response) => {
+export const me = async (request, reply) => {
 	const {user} = request;
 	if (!user) {
-		return response.view('partials/profile/login');
+    return reply.view('partials/profile/login');
 	}
 
-	return response.view('partials/profile/me');
+  return reply.view('partials/profile/me');
 };
 
-export const createAccountForm = async (request, response) => response.view('partials/profile/signup');
+export const createAccountForm = async (request, reply) => reply.view('partials/profile/signup');
 
-export const login = async (request, res) => {
+export const login = async (request, reply) => {
 	const {email, password} = request.body;
-	const login = await database.db(Logins._name)
+  const credentials = await database.db(Logins._name)
 		.where({[Logins.identifier]: email}).first();
-	if (!login) {
-		return res.view('partials/profile/login', {error: 'Invalid email or password'});
+  if (!credentials) {
+    return reply.view('partials/profile/login', {error: 'Invalid email or password'});
 	}
 
-	if (!(await auth.verify(password, login.password))) {
-		return res.view('partials/profile/not-found.pug');
+  if (!(await auth.verify(password, credentials.password))) {
+    return reply.view('partials/profile/not-found.pug');
 	}
 
 	const user = await database.db(Users._name)
-		.where({[Users.id]: login.users_id}).first();
+    .where({[Users.id]: credentials.users_id}).first();
 	if (!user) {
-		return res.view('partials/profile/not-found.pug');
+    return reply.view('partials/profile/not-found.pug');
 	}
 
 	const payload = {sub: user, iss: 'WorHou', aud: 'WorHou'};
 	const token = jwt.sign(payload, auth.key, {expiresIn: '1h'});
-	return res.view('partials/profile/set-token.pug', {token});
+  return reply.view('partials/profile/set-token.pug', {token});
 };
 
-export const signup = async (request, res) => {
+export const signup = async (request, reply) => {
 	const {name, email, password} = request.body;
 	const exists = await database.db(Logins._name)
 		.where({[Logins.identifier]: email}).first();
 	if (exists) {
-		return res.view('partials/profile/signup.pug', {error: 'Email already in use'});
+    return reply.view('partials/profile/signup.pug', {error: 'Email already in use'});
 	}
 
 	let users_id;
@@ -64,5 +64,5 @@ export const signup = async (request, res) => {
 	});
 	const payload = {sub: {id: users_id, name}, iss: 'WorHou', aud: 'WorHou'};
 	const token = jwt.sign(payload, auth.key, {expiresIn: '1h'});
-	return res.view('partials/profile/set-token.pug', {token});
+  return reply.view('partials/profile/set-token.pug', {token});
 };

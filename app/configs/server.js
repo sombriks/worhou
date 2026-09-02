@@ -118,18 +118,21 @@ const api = {
 		},
 		worksheet: {
 			get: worksheet.page,
+      '/list': {
+        get: worksheet.list,
+      },
 		},
 	},
 };
 
 const methods = new Set(['get', 'post', 'put', 'delete']);
 
-const buildApi = (fastify, routes = api, base = '') => {
+const buildApi = (fast, routes = api, base = '') => {
 	for (const key in routes) {
 		if (methods.has(key)) {
-			fastify[key](base, routes[key]);
+      fast[key](base, routes[key]);
 		} else {
-			buildApi(fastify, routes[key], base + key);
+      buildApi(fast, routes[key], base + key);
 		}
 	}
 };

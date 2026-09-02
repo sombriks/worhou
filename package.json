@@ -37,7 +37,7 @@
   "devDependencies": {
     "@testcontainers/postgresql": "^12.1.0",
     "@types/knex": "^0.15.2",
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "ava": "^8.0.1",
     "c8": "^12.0.0",
     "js-yaml": "^5.4.1",
@@ -51,7 +51,7 @@
     "@fastify/view": "^12.0.0",
     "@fastify/websocket": "^11.3.0",
     "@mdi/font": "^7.4.47",
-    "alpinejs": "^3.17.0",
+    "alpinejs": "^3.17.1",
     "bulma": "^1.0.4",
     "date-fns": "^4.4.0",
     "fastify": "^5.12.1",
@@ -71,5 +71,26 @@
       "app/**/*.spec.js",
       "app/*.spec.js"
     ]
+  },
+  "xo": {
+    "rules": {
+      "new-cap": "off",
+      "camelcase": "off",
+      "guard-for-in": "off",
+      "accessor-pairs": "off",
+      "no-restricted-globals": "off",
+      "no-constructor-return": "off",
+      "unicorn/filename-case": "off",
+      "n/prefer-global/buffer": "off",
+      "n/prefer-global/process": "off",
+      "unicorn/no-array-reduce": "off",
+      "jsdoc/require-description": "off",
+      "jsdoc/require-param-description": "off",
+      "unicorn/consistent-boolean-name": "off",
+      "regexp/prefer-named-capture-group": "off",
+      "unicorn/no-top-level-side-effects": "off",
+      "unicorn/no-await-expression-member": "off",
+      "import-x/no-anonymous-default-export": "off"
+    }
   }
 }

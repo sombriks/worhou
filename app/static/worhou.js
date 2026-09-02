@@ -1,3 +1,5 @@
+/* global htmx */
+
 /**
  Details about the person already known in this browser
  */
@@ -56,7 +58,7 @@ class WorHou {
 
 	set token(token) {
 		this.#user.token = token;
-		const payload = token?.split('\.', 2)[1];
+		const payload = token?.split('.', 2)[1];
 		const detail = JSON.parse(atob(payload));
 		this.#user.name = detail?.sub?.name;
 		localStorage.setItem('user', JSON.stringify(this.#user));
@@ -66,7 +68,7 @@ class WorHou {
 		this.#user.token = undefined;
 		this.#user.name = 'Stranger';
 		localStorage.setItem('user', JSON.stringify(this.#user));
-    globalThis.location.reload();
+		globalThis.location.reload();
 	}
 }
 

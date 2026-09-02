@@ -2,12 +2,12 @@ import {endOfDay, format, parse, startOfDay,} from 'date-fns';
 import database from '#configs/database.js';
 import {Timelogs} from '#models/timelogs.js';
 
-export const page = async (request, res) => res.view('pages/timelog');
+export const page = async (request, reply) => reply.view('pages/timelog');
 
-export const today = async (request, res) => {
+export const today = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return res.view('partials/shared/please-login');
+    return reply.view('partials/shared/please-login');
   }
 
   const d = new Date();
@@ -18,13 +18,13 @@ export const today = async (request, res) => {
     .orderBy(Timelogs.stamp)
     .select();
   const day = format(d, 'yyyy-MM-dd');
-  return res.view('partials/timelog/today', {stamps, day, format});
+  return reply.view('partials/timelog/today', {stamps, day, format});
 };
 
-export const clockIn = async (request, res) => {
+export const clockIn = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return res.view('partials/shared/please-login');
+    return reply.view('partials/shared/please-login');
   }
 
   await database.db(Timelogs._name)
@@ -34,13 +34,13 @@ export const clockIn = async (request, res) => {
       [Timelogs.creator_id]: user.id,
     });
   // Restful babe
-  return res.code(303).redirect('/timelog/today');
+  return reply.code(303).redirect('/timelog/today');
 };
 
-export const detail = async (request, res) => {
+export const detail = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return res.view('partials/shared/please-login');
+    return reply.view('partials/shared/please-login');
   }
 
   const {id} = request.params;
@@ -55,14 +55,14 @@ export const detail = async (request, res) => {
     .first();
 
   return edit
-    ? res.view('partials/timelog/edit', {timelog})
-    : res.view('partials/timelog/detail', {timelog, format});
+    ? reply.view('partials/timelog/edit', {timelog})
+    : reply.view('partials/timelog/detail', {timelog, format});
 };
 
-export const update = async (request, res) => {
+export const update = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return res.view('partials/shared/please-login');
+    return reply.view('partials/shared/please-login');
   }
 
   const {id} = request.params;
@@ -74,12 +74,12 @@ export const update = async (request, res) => {
   const isJustCancel = deactivate === 'on';
 
   await database.db.transaction(async tx => {
-    const result = await tx(Timelogs._name)
+    await tx(Timelogs._name)
       .where({[Timelogs.id]: id, [Timelogs.owner_id]: user.id})
       .update({[Timelogs.note]: note, [Timelogs.cancelled_at]: new Date()});
 
     if (!isJustCancel) {
-      const result2 = await tx(Timelogs._name)
+      await tx(Timelogs._name)
         .insert({
           [Timelogs.stamp]: stamp,
           [Timelogs.owner_id]: user.id,
@@ -90,5 +90,5 @@ export const update = async (request, res) => {
     }
   });
 
-  return res.view('partials/shared/goto', {to: '/timelog'});
+  return reply.view('partials/shared/goto', {to: '/timelog'});
 };
