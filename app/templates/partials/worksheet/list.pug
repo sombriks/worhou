@@ -3,9 +3,10 @@ include ../../components/shared/key-val
 each day in Object.keys(sheet)
     details
         summary.is-flex
-            +key-val(format(day, 'yyyy-MM-dd'),
-              `${sheet[day].total.hours}h ${sheet[day].total.minutes}m`, {'class': 'is-flex-grow-1'})
+            +key-val(day,
+              `${sheet[day].total.hours}h ${sheet[day].total.minutes}m ${sheet[day].total.seconds}s`,
+              {'class': 'is-flex-grow-1'})
         .fixed-grid.has-4-cols
             .grid
               each turn in sheet[day].periods
-                  .cell(style={'white-space': 'nowrap'})=`${turn.start} - ${turn.end}`
+                  .cell(style={'white-space': 'nowrap'})=`${format(turn.start.stamp, 'HH:mm')} - ${format(turn.end.stamp, 'HH:mm')}`
