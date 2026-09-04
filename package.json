@@ -78,6 +78,7 @@
       "camelcase": "off",
       "guard-for-in": "off",
       "accessor-pairs": "off",
+      "no-await-in-loop": "off",
       "no-restricted-globals": "off",
       "no-constructor-return": "off",
       "unicorn/filename-case": "off",
