@@ -7,7 +7,7 @@ import fastifyView from '@fastify/view';
 import jwt from 'jsonwebtoken';
 import pug from 'pug';
 import {format} from 'date-fns';
-import auth from './auth.js';
+import auth from '#configs/auth.js';
 import * as onboarding from '#controllers/onboarding.js';
 import * as timelog from '#controllers/timelog.js';
 import * as worksheet from '#controllers/worksheet.js';
@@ -17,7 +17,7 @@ import * as profile from '#controllers/profile.js';
 // Expose the server
 /** @type {import('fastify').FastifyInstance} */
 export const fastify = Fastify({
-	logger: true,
+  logger: true,
 });
 
 // Support for regular HTNL forms
@@ -27,114 +27,114 @@ fastify.register(fastifyMultipart);
 // Expose frontend libraries
 const nodeModules = path.join(import.meta.dirname, '../../node_modules');
 const statics = {
-	[path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // -htmx/htmx.js
-	[path.join(nodeModules, 'bulma/css')]: '/bulma', // -bulma/bulma.css
-	[path.join(nodeModules, '@date-fns/cdn')]: '/date-fns', // -date-fns/cdn.js
-	[path.join(nodeModules, 'jwt-decode/build/cjs')]: '/jwt-decode', // -jwt-decode/index.js
-	[path.join(nodeModules, '@mdi/font')]: '/mdi', // -mdi/css/materialdesignicons.css
-	[path.join(nodeModules, 'alpinejs/dist')]: '/alpinejs', // -alpinejs/cdn.js
-	[path.join(import.meta.dirname, '../static')]: '/static', // -static/worhou.css
+  [path.join(nodeModules, 'htmx.org/dist')]: '/htmx', // -htmx/htmx.js
+  [path.join(nodeModules, 'bulma/css')]: '/bulma', // -bulma/bulma.css
+  [path.join(nodeModules, '@date-fns/cdn')]: '/date-fns', // -date-fns/cdn.js
+  [path.join(nodeModules, 'jwt-decode/build/cjs')]: '/jwt-decode', // -jwt-decode/index.js
+  [path.join(nodeModules, '@mdi/font')]: '/mdi', // -mdi/css/materialdesignicons.css
+  [path.join(nodeModules, 'alpinejs/dist')]: '/alpinejs', // -alpinejs/cdn.js
+  [path.join(import.meta.dirname, '../static')]: '/static', // -static/worhou.css
 };
 let isDecorateReply = true;
 for (const root in statics) {
-	const prefix = statics[root];
-	fastify.register(fastifyStatic, {
-		root, prefix, decorateReply: isDecorateReply,
-	});
-	isDecorateReply = false;
+  const prefix = statics[root];
+  fastify.register(fastifyStatic, {
+    root, prefix, decorateReply: isDecorateReply,
+  });
+  isDecorateReply = false;
 }
 
 // Set up template engine
 fastify.register(fastifyView, {
-	root: path.join(import.meta.dirname, '../templates'),
-	defaultContext: {
-		base: process.env.BASE_URL ?? '',
-		dateFns: {
-			format,
-		},
-	},
-	viewExt: 'pug',
-	engine: {pug},
+  root: path.join(import.meta.dirname, '../templates'),
+  defaultContext: {
+    base: process.env.BASE_URL ?? '',
+    dateFns: {
+      format,
+    },
+  },
+  viewExt: 'pug',
+  engine: {pug},
 });
 
 // Custom request objects
 fastify.decorateRequest('user', null);
 fastify.addHook('preHandler', async (request, reply) => {
-	const bearerToken = request.headers.authorization;
-	if (!bearerToken) {
-		return;
-	}
+  const bearerToken = request.headers.authorization;
+  if (!bearerToken) {
+    return;
+  }
 
-	const token = bearerToken.split(' ', 2)[1];
-	if (!token) {
-		return;
-	}
+  const token = bearerToken.split(' ', 2)[1];
+  if (!token) {
+    return;
+  }
 
-	try {
-		const payload = jwt.verify(token, auth.key);
-		request.user = payload.sub;
-		reply.locals = {
-			...reply.locals,
-			user: request.user,
-		};
-	} catch (error) {
-		request.log.warn(error);
-	}
+  try {
+    const payload = jwt.verify(token, auth.key);
+    request.user = payload.sub;
+    reply.locals = {
+      ...reply.locals,
+      user: request.user,
+    };
+  } catch (error) {
+    request.log.warn(error);
+  }
 });
 
 // Wire routes with style
 const api = {
-	'/': {
-		get: onboarding.page,
-		profile: {
-			get: profile.page,
-			'/login': {
-				get: profile.me,
-				put: profile.login,
-			},
-			'/signup': {
-				get: profile.createAccountForm,
-				post: profile.signup,
-			},
-		},
-		teams: {
-			get: teams.page,
-		},
-		timelog: {
-			get: timelog.page,
-			'/today': {
-				get: timelog.today,
-			},
-			'/clock-in': {
-				post: timelog.clockIn,
-			},
-			'/:id': {
-				get: timelog.detail,
-				put: timelog.update,
-			},
-		},
-		welcome: {
-			get: onboarding.welcome,
-		},
-		worksheet: {
-			get: worksheet.page,
+  '/': {
+    get: onboarding.page,
+    profile: {
+      get: profile.page,
+      '/login': {
+        get: profile.me,
+        put: profile.login,
+      },
+      '/signup': {
+        get: profile.createAccountForm,
+        post: profile.signup,
+      },
+    },
+    teams: {
+      get: teams.page,
+    },
+    timelog: {
+      get: timelog.page,
+      '/today': {
+        get: timelog.today,
+      },
+      '/clock-in': {
+        post: timelog.clockIn,
+      },
+      '/:id': {
+        get: timelog.detail,
+        put: timelog.update,
+      },
+    },
+    welcome: {
+      get: onboarding.welcome,
+    },
+    worksheet: {
+      get: worksheet.page,
       '/list': {
         get: worksheet.list,
       },
-		},
-	},
+    },
+  },
 };
 
 const methods = new Set(['get', 'post', 'put', 'delete']);
 
 const buildApi = (fast, routes = api, base = '') => {
-	for (const key in routes) {
-		if (methods.has(key)) {
+  for (const key in routes) {
+    if (methods.has(key)) {
       fast[key](base, routes[key]);
-		} else {
+    } else {
       buildApi(fast, routes[key], base + key);
-		}
-	}
+    }
+  }
 };
 
 buildApi(fastify);

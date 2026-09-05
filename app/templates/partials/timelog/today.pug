@@ -1,9 +1,9 @@
 include ../../components/shared/message
 include ../../components/timelog/clock-stamp
 
-+message(`Timelogs for ${day}`, "is-info today-stamps")
++message(`Timelogs for ${format(day, 'yyyy-MM-dd')}`, "is-info today-stamps")
     each s in stamps
-        +clock-stamp(s, format(s.stamp, 'HH:mm'))
+        +clock-stamp(s, format(s.stamp, 'HH:mm:ss'))
     if !stamps || stamps.length == 0
       i.is-text.is-warning nothing clocked today
     .field.is-grouped.p-4

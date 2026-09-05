@@ -51,7 +51,7 @@ npm i -D ava c8 js-yaml xo
 # all others
 npm i pg knex
 npm i fastify @fastify/view @fastify/static @fastify/websocket
-npm i pug htmx.org@4.0.0-beta5 bulma
+npm i pug htmx.org@4.0.0 bulma
 npm i @date-fns/cdn date-fns alpinejs
 ```
 
@@ -59,15 +59,14 @@ Initial skeleton:
 
 ```bash
 mkdir -p app/{configs,controllers,infra,models,services,static}
-mkdir -p app/templates/{components,pages,layouts}
+mkdir -p app/templates/{components,pages,layouts,partials}
 mkdir -p app/migrations/{common,development,production/test}
 touch app/main.js
 touch app/configs/{server,database,auth}.js
-touch app/controllers/{person,worksheet,timelog}.js
-touch app/controllers/{dashboard,notifications,onboarding}.js
+touch app/controllers/{onboarding,profile,teams,timelog,worksheet}.js
 touch app/infra/database.yml
-touch app/models/{person,worksheet,notifications}.js
-touch app/services/{person,worksheet,timelog,dashboard,notifications}.js
+touch app/models/{logins,timelogs,users,worksheets}.js
+touch app/services/{onboarding,profile,teams,timelog,worksheet}.js
 touch app/static/worhou.{css,js}
 touch app/templates/index.pug
 ```
@@ -90,7 +89,7 @@ AUTH_KEY=
 npm run test
 ```
 
-### Lint / format
+### Lint and Format
 
 ```bash
 npm run lint
@@ -126,12 +125,12 @@ using the [knex schema][knex-schema] api to evolve the database.
 
 ## Planned features
 
-1. basic clock in / clock out
-2. timesheet configuration
-3. export reports
-4. cool graphics
-5. teams
-6. notifications
+1. [X] basic clock in / clock out
+2. [ ] timesheet configuration
+3. [ ] export reports
+4. [ ] cool graphics
+5. [ ] teams
+6. [ ] notifications
 
 ## Noteworthy
 
@@ -140,7 +139,8 @@ using the [knex schema][knex-schema] api to evolve the database.
 - [Locality Of Behavior][lob] first, Single [Responsibility Principle][srp]
   when there are too many concerns.
 - [Subpath patterns][subpath] are cool.
-- 
+- Mind the app and database timezones. Save reference dates so nobody gets
+  wrong dates.
 
 [fastify-inject]: https://fastify.dev/docs/latest/Guides/Testing/
 [lob]: https://htmx.org/essays/locality-of-behaviour/

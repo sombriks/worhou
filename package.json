@@ -73,6 +73,7 @@
     ]
   },
   "xo": {
+    "space": 2,
     "rules": {
       "new-cap": "off",
       "camelcase": "off",
