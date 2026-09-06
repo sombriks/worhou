@@ -100,3 +100,32 @@ test('should create user, save timelog and list result', async t => {
   t.notRegex(todayResponse.body, /nothing clocked today/iv);
 });
 
+test('should get worksheet for test user with registered hours', async t => {
+  const loginResponse = await fastify.inject({
+    method: 'PUT',
+    url: '/profile/login',
+    body: {
+      email: 'test@example.com',
+      password: 'e1e2e3e4',
+    },
+  });
+
+  t.is(loginResponse.statusCode, 200);
+
+  const token = loginResponse.body.match(/w\.token = '([^']+)'/v)?.[1];
+  t.truthy(token);
+
+  const worksheetResponse = await fastify.inject({
+    method: 'GET',
+    url: '/worksheet/list',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  t.is(worksheetResponse.statusCode, 200);
+  t.regex(worksheetResponse.body, /line-sheet/v);
+  t.regex(worksheetResponse.body, /\d{1,2}h \d{1,2}m \d{1,2}s/v);
+  t.regex(worksheetResponse.body, /\d{2}:\d{2} - \d{2}:\d{2}/v);
+});
+

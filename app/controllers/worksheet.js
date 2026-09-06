@@ -1,4 +1,4 @@
-import {format, subMonths} from 'date-fns';
+import {format, subMonths, subWeeks} from 'date-fns';
 import {getSheetFor} from '#services/worksheet.js';
 
 /**
@@ -17,8 +17,11 @@ export const list = async (request, reply) => {
     return reply.view('partials/shared/please-login');
   }
 
+  const {period, sorting} = request.query;
   const end = new Date();
-  const start = subMonths(end, 1);
+  const start = period === 'lastMonth' ? subMonths(end, 1) : subWeeks(end, 1);
   const sheet = await getSheetFor(user, {start, end});
-  return reply.view('partials/worksheet/list', {sheet, format});
+  return reply.view('partials/worksheet/list', {
+    period, sorting, sheet, format,
+  });
 };

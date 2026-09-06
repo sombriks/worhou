@@ -7,10 +7,8 @@ block head
     title Timesheet
 block content
     .is-flex-grow-1
-        // missing filter
-    +message('My Working Hours','is-info is-flex-grow-2')
+    +message('My Working Hours','is-info is-flex-grow-1')
         p(hx-get=`${base}/worksheet/list`
             hx-swap="outerHTML"
             hx-trigger="load") ...
     .is-flex-grow-1
-        // missing totals
