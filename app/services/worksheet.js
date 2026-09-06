@@ -46,14 +46,16 @@ export async function getSheetFor(user, filter) {
   entries.reduce((acc, row) => {
     const day = format(row.start.stamp, 'yyyy-MM-dd');
     acc[day].periods.push(row);
-    const h = differenceInHours(row.end.stamp, row.start.stamp);
-    acc[day].total.hours += h ?? 0;
-    const m = differenceInMinutes(row.end.stamp, row.start.stamp);
-    acc[day].total.minutes += (m ?? 0) - (60 * h);
-    const s = differenceInSeconds(row.end.stamp, row.start.stamp);
-    acc[day].total.seconds += (s ?? 0) - (60 * m);
+    acc[day].total.hours += differenceInHours(row.end.stamp, row.start.stamp) ?? 0;
+    acc[day].total.minutes += differenceInMinutes(row.end.stamp, row.start.stamp) ?? 0;
+    acc[day].total.seconds += differenceInSeconds(row.end.stamp, row.start.stamp) ?? 0;
     return acc;
   }, sheet);
+
+  for (const day of Object.values(sheet)) {
+    day.total.minutes %= 60;
+    day.total.seconds %= 60;
+  }
 
   return sheet;
 }

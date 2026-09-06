@@ -10,3 +10,11 @@ body {
 main {
     flex: 1;
 }
+
+.line-sheet {
+    border-bottom: 1px solid var(--bulma-border);
+}
+
+.line-sheet-odd {
+    background-color: var(--bulma-background-active);
+}
