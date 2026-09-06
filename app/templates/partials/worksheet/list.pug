@@ -31,9 +31,8 @@ include ../../components/shared/key-val
                     value='dec'
                     checked=sorting === 'dec')/
                 i.mdi.mdi-arrow-down-bold
-  -
-      let days = Object.keys(sheet)
-      if (sorting === 'dec') days = days.reverse()
+  - let days = Object.keys(sheet)
+  - if (sorting === 'dec') days = days.reverse()
   each day,i in days
       details.line-sheet(class={'line-sheet-odd': i % 2 !== 0})
           summary.is-flex
