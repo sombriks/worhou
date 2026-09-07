@@ -65,7 +65,7 @@ export async function getToken(login) {
   }
 
   const payload = {sub: user, iss: 'WorHou', aud: 'WorHou'};
-  return jwt.sign(payload, auth.key, {expiresIn: '1h'});
+  return jwt.sign(payload, auth.key, {expiresIn: auth.expiresIn});
 }
 
 /**
@@ -97,5 +97,5 @@ export async function createEmailAccount(newAccoount) {
     return rId;
   });
   const payload = {sub: {id: users_id, name}, iss: 'WorHou', aud: 'WorHou'};
-  return jwt.sign(payload, auth.key, {expiresIn: '1h'});
+  return jwt.sign(payload, auth.key, {expiresIn: '1d'});
 }

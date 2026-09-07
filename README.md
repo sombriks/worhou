@@ -81,6 +81,7 @@ DB_PASSWORD=
 DB_PORT=5432
 PORT=3000
 AUTH_KEY=
+AUTH_EXPIRES_IN=1d
 ```
 
 ## How to test
@@ -126,11 +127,12 @@ using the [knex schema][knex-schema] api to evolve the database.
 ## Planned features
 
 1. [X] basic clock in / clock out
-2. [ ] timesheet configuration
-3. [ ] export reports
-4. [ ] cool graphics
-5. [ ] teams
-6. [ ] notifications
+2. [ ] simple device login
+3. [ ] simple email login
+4. [ ] timesheet configuration
+5. [ ] export reports
+6. [ ] cool graphics
+7. [ ] teams
 
 ## Noteworthy
 

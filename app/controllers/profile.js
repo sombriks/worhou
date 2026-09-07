@@ -13,7 +13,7 @@ export const page = async (request, reply) => reply.view('pages/profile');
 export const me = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return reply.view('partials/profile/login');
+    return reply.view('partials/profile/email-login');
   }
 
   return reply.view('partials/profile/me');
@@ -33,7 +33,7 @@ export const login = async (request, reply) => {
   const {email, password} = request.body;
   const token = await getToken({email, password});
   if (!token) {
-    return reply.view('partials/profile/login', {error: 'Invalid email or password'});
+    return reply.view('partials/profile/email-login', {error: 'Invalid email or password'});
   }
 
   return reply.view('partials/profile/set-token.pug', {token});
