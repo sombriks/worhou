@@ -1,7 +1,7 @@
 /* global htmx */
 
 /**
- Details about the person already known in this browser
+ Details about the person already known in this browser/device
  */
 class WorHou {
   static #instance;
@@ -24,14 +24,25 @@ class WorHou {
     if (!this.#user) {
       this.#user = {
         name: 'Stranger',
+        token: null,
         visits: 0,
+        device: crypto.randomUUID(),
       };
+      localStorage.setItem('user', JSON.stringify(this.#user));
+    }
+
+    if (!this.#user?.device) {
+      this.#user.device = crypto.randomUUID();
       localStorage.setItem('user', JSON.stringify(this.#user));
     }
   }
 
   get userName() {
     return this.#user?.name || 'Stranger';
+  }
+
+  get device() {
+    return this.#user.device;
   }
 
   get visits() {
@@ -65,18 +76,18 @@ class WorHou {
   }
 
   logout() {
-    this.#user.token = undefined;
+    this.#user.token = null;
     this.#user.name = 'Stranger';
     localStorage.setItem('user', JSON.stringify(this.#user));
     globalThis.location.reload();
   }
 }
 
-// Token setup
+// Request setup
 htmx.registerExtension('hx-Authorization', {
   htmx_before_request(elt, detail) {
     const w = new WorHou();
-    if (w.bearer) {
+    if (w.token) {
       detail.ctx.request.headers.Authorization = w.bearer;
     }
   },

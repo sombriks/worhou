@@ -45,7 +45,7 @@ test('should get index/onboarding page', async t => {
 test('should login', async t => {
   const response = await fastify.inject({
     method: 'PUT',
-    url: '/profile/login',
+    url: '/profile/email/login',
     body: {
       email: 'test@example.com',
       password: 'e1e2e3e4',
@@ -61,7 +61,7 @@ test('should create user, save timelog and list result', async t => {
 
   const signupResponse = await fastify.inject({
     method: 'POST',
-    url: '/profile/signup',
+    url: '/profile/email/signup',
     body: {
       name: 'Timelog Test User',
       email,
@@ -103,7 +103,7 @@ test('should create user, save timelog and list result', async t => {
 test('should get worksheet for test user with registered hours', async t => {
   const loginResponse = await fastify.inject({
     method: 'PUT',
-    url: '/profile/login',
+    url: '/profile/email/login',
     body: {
       email: 'test@example.com',
       password: 'e1e2e3e4',

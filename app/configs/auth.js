@@ -9,5 +9,5 @@ export default {
   },
   get expiresIn() {
     return _expiresIn;
-  }
+  },
 };

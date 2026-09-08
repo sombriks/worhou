@@ -88,13 +88,21 @@ const api = {
     get: onboarding.page,
     profile: {
       get: profile.page,
-      '/login': {
+      '/me': {
         get: profile.me,
-        put: profile.login,
       },
-      '/signup': {
-        get: profile.createAccountForm,
-        post: profile.signup,
+      '/email': {
+        '/login': {
+          get: profile.loginForm,
+          put: profile.login,
+        },
+        '/signup': {
+          get: profile.signupForm,
+          post: profile.signup,
+        },
+      },
+      '/device': {
+        post: profile.signDevice,
       },
     },
     teams: {
