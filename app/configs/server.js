@@ -76,7 +76,7 @@ const api = {
     profile: {
       get: profile.page,
       '/me': {
-        get: profile.me,
+        get: profile.currentUser,
       },
       '/email': {
         '/login': {

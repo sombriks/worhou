@@ -1,0 +1,10 @@
+include ../shared/key-val
+include ../shared/message
+
+mixin my-settings
+    +message('My settings')
+        +key-val('Job title', userSettings.job_title)
+        +key-val('Shift size', userSettings.shift_size)
+        +key-val('Hour per day', userSettings.hours_per_day)
+        +key-val('Hour per week', userSettings.hours_per_week)
+        +key-val('Hour per month', userSettings.hours_per_month)

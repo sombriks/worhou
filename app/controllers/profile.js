@@ -12,7 +12,7 @@ export const page = async (request, reply) => reply.view('pages/profile');
  @param {import('fastify').FastifyRequest} request
  @param {import('fastify').FastifyReply} reply
  */
-export const me = async (request, reply) => {
+export const currentUser = async (request, reply) => {
   const {user} = request;
   if (!user) {
     return reply.status(401).view('partials/profile/unlogged');
@@ -20,7 +20,7 @@ export const me = async (request, reply) => {
 
   const userSettings = await getOrCreateUserSettings(user);
 
-  return reply.view('partials/profile/me', {userSettings});
+  return reply.view('partials/profile/current-user', {userSettings});
 };
 
 /**

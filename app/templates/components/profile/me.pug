@@ -1,8 +1,8 @@
+include ../shared/key-val
 include ../shared/message
 
 mixin me()
     +message("Profile")
-        p Login details
-        .field.is-grouped.is-grouped-right(x-data="{}")
-            button.button.is-warning(
-                @click="new WorHou().logout()") Log out
+        p.subtitle User details
+        +key-val('Name', user.name)
+
