@@ -87,7 +87,7 @@ class WorHou {
 htmx.registerExtension('hx-Authorization', {
   htmx_before_request(elt, detail) {
     const w = new WorHou();
-    if (w.token) {
+    if (w.bearer) {
       detail.ctx.request.headers.Authorization = w.bearer;
     }
   },

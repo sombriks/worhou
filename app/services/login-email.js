@@ -1,6 +1,4 @@
-import jwt from 'jsonwebtoken';
-import {hash, verify} from './auth.js';
-import auth from '#configs/auth.js';
+import {getToken, hash, verify} from './auth.js';
 import database from '#configs/database.js';
 import {Logins} from '#models/logins.js';
 import {Users} from '#models/users.js';
@@ -27,8 +25,7 @@ export async function emailAccountLogin(login) {
     return undefined;
   }
 
-  const payload = {sub: user, iss: 'WorHou', aud: 'WorHou'};
-  return jwt.sign(payload, auth.key, {expiresIn: auth.expiresIn});
+  return getToken(user);
 }
 
 /**
@@ -62,6 +59,5 @@ export async function emailAccountCreate(newAccoount) {
       });
     return rId;
   });
-  const payload = {sub: {id: users_id, name}, iss: 'WorHou', aud: 'WorHou'};
-  return jwt.sign(payload, auth.key, {expiresIn: '1d'});
+  return getToken({id: users_id, name});
 }

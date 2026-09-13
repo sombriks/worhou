@@ -1,0 +1,4 @@
+# install under /etc/caddy/Caddyfile.d/
+worhou.getsheetdone.net {
+    reverse_proxy localhost:3000
+}

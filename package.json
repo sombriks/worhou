@@ -23,8 +23,8 @@
     "#services/*": "./app/services/*"
   },
   "scripts": {
-    "db:up": "docker compose -f app/infra/database.yml up",
-    "db:down": "docker compose -f app/infra/database.yml down",
+    "db:up": "podman compose -f app/infra/database.yml up",
+    "db:down": "podman compose -f app/infra/database.yml down",
     "dev": "node --env-file=.env --watch app/main.js",
     "test": "c8 ava",
     "lint": "xo --fix",

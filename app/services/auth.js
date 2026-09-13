@@ -1,5 +1,7 @@
 import crypto from 'node:crypto';
 import {promisify} from 'node:util';
+import jwt from 'jsonwebtoken';
+import auth from '#configs/auth.js';
 
 const pbkdf2 = promisify(crypto.pbkdf2);
 
@@ -34,4 +36,9 @@ export async function verify(plainPwd, storedPwd) {
   }
 
   return crypto.timingSafeEqual(newHashBuf, storedHashBuf);
+}
+
+export async function getToken(user) {
+  const payload = {sub: user, iss: 'WorHou', aud: 'WorHou'};
+  return jwt.sign(payload, auth.key, {expiresIn: auth.expiresIn});
 }
