@@ -1,6 +1,7 @@
 import {endOfDay, format, parse, startOfDay,} from 'date-fns';
 import database from '#configs/database.js';
 import {Timelogs} from '#models/timelogs.js';
+import {Users} from '#models/users.js';
 
 /**
  @param {{id:number}} user
@@ -32,13 +33,28 @@ export async function clockInNow(user) {
  @param {number} id
  */
 export async function getDetail(user, id) {
-  // TODO gather more info for detail screen
-  return await database.db(Timelogs._name)
+  const detail = await database.db(Timelogs._name)
     .where({
       [Timelogs.id]: id,
       [Timelogs.owner_id]: user.id,
     })
     .first();
+  if (detail?.replaced_id) {
+    detail.replaced = await database.db(Timelogs._name)
+      .where({
+        [Timelogs.id]: detail.replaced_id,
+        [Timelogs.owner_id]: user.id,
+      })
+      .first();
+  }
+
+  if (detail.creator_id) {
+    detail.creator = await database.db(Users._name)
+      .where({[Users.id]: detail.creator_id})
+      .first();
+  }
+
+  return detail;
 }
 
 /**

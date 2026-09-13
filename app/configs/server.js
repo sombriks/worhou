@@ -4,15 +4,14 @@ import fastifyFormBody from '@fastify/formbody';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
-import jwt from 'jsonwebtoken';
 import pug from 'pug';
 import {format} from 'date-fns';
-import auth from '#configs/auth.js';
 import * as onboarding from '#controllers/onboarding.js';
 import * as timelog from '#controllers/timelog.js';
 import * as worksheet from '#controllers/worksheet.js';
 import * as teams from '#controllers/teams.js';
 import * as profile from '#controllers/profile.js';
+import {getUser} from '#services/auth.js';
 
 // Expose the server
 /** @type {import('fastify').FastifyInstance} */
@@ -60,25 +59,13 @@ fastify.register(fastifyView, {
 // Custom request objects
 fastify.decorateRequest('user', null);
 fastify.addHook('preHandler', async (request, reply) => {
-  const bearerToken = request.headers.authorization;
-  if (!bearerToken) {
-    return;
-  }
-
-  const token = bearerToken.split(' ', 2)[1];
-  if (!token) {
-    return;
-  }
-
-  try {
-    const payload = jwt.verify(token, auth.key);
-    request.user = payload.sub;
+  const user = await getUser(request.headers.authorization);
+  if (user) {
+    request.user = user;
     reply.locals = {
       ...reply.locals,
-      user: request.user,
+      user,
     };
-  } catch (error) {
-    request.log.warn(error);
   }
 });
 

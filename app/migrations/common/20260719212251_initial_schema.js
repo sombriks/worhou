@@ -19,12 +19,11 @@ export const up = async knex => {
     table.increments('id').primary();
     table.integer('logins_types_id').notNullable().references('logins_types.id');
     table.integer('users_id').notNullable().references('users.id').onDelete('CASCADE');
-    table.string('identifier').notNullable();
+    table.string('identifier').notNullable().unique();
     table.string('password').notNullable();
     table.string('challenge');
     table.timestamp('challenge_at');
     table.timestamps(true, true);
-    table.unique(['users_id', 'identifier']);
   });
   // Timelogs
   await knex.schema.createTable('timelogs', table => {

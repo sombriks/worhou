@@ -2,6 +2,8 @@ import crypto from 'node:crypto';
 import {promisify} from 'node:util';
 import jwt from 'jsonwebtoken';
 import auth from '#configs/auth.js';
+import database from '#configs/database.js';
+import {Users} from '#models/users.js';
 
 const pbkdf2 = promisify(crypto.pbkdf2);
 
@@ -41,4 +43,31 @@ export async function verify(plainPwd, storedPwd) {
 export async function getToken(user) {
   const payload = {sub: user, iss: 'WorHou', aud: 'WorHou'};
   return jwt.sign(payload, auth.key, {expiresIn: auth.expiresIn});
+}
+
+/**
+ @param {string} token
+ */
+export async function getUser(token) {
+  try {
+    if (!token) {
+      return null;
+    }
+
+    token = token.split(' ', 2)[1];
+    if (!token) {
+      return null;
+    }
+
+    const payload = jwt.verify(token, auth.key);
+    const id = payload.sub?.id;
+    if (!id) {
+      return null;
+    }
+
+    return await database.db(Users._name).where({id}).first();
+  } catch (error) {
+    console.warn('failed to extract user from token', error);
+    return null;
+  }
 }

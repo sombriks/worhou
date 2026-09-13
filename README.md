@@ -127,7 +127,7 @@ using the [knex schema][knex-schema] api to evolve the database.
 ## Planned features
 
 1. [X] basic clock in / clock out
-2. [ ] simple device login
+2. [X] simple device login
 3. [ ] simple email login
 4. [ ] timesheet configuration
 5. [ ] export reports

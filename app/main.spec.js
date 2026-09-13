@@ -42,7 +42,7 @@ test('should get index/onboarding page', async t => {
   t.regex(response.payload, /welcome/iv);
 });
 
-test('should login', async t => {
+test('should login using email', async t => {
   const response = await fastify.inject({
     method: 'PUT',
     url: '/profile/email/login',
@@ -129,3 +129,16 @@ test('should get worksheet for test user with registered hours', async t => {
   t.regex(worksheetResponse.body, /\d{2}:\d{2} - \d{2}:\d{2}/v);
 });
 
+test('should login using device', async t => {
+  const device = crypto.randomUUID();
+  const response = await fastify.inject({
+    method: 'POST',
+    url: '/profile/device',
+    body: {
+      device,
+    },
+  });
+
+  t.is(response.statusCode, 200);
+  t.regex(response.body, /token/iv);
+});

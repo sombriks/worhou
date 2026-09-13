@@ -14,7 +14,7 @@ export const page = async (request, reply) => reply.view('pages/timelog');
 export const today = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return reply.view('partials/shared/please-login');
+    return reply.status(401).view('partials/shared/please-login');
   }
 
   const day = new Date();
@@ -29,7 +29,7 @@ export const today = async (request, reply) => {
 export const clockIn = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return reply.view('partials/shared/please-login');
+    return reply.status(401).view('partials/shared/please-login');
   }
 
   await clockInNow(user);
@@ -43,7 +43,7 @@ export const clockIn = async (request, reply) => {
 export const detail = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return reply.view('partials/shared/please-login');
+    return reply.status(401).view('partials/shared/please-login');
   }
 
   const {id} = request.params;
@@ -61,7 +61,7 @@ export const detail = async (request, reply) => {
 export const update = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return reply.view('partials/shared/please-login');
+    return reply.status(401).view('partials/shared/please-login');
   }
 
   const {id} = request.params;

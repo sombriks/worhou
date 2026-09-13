@@ -14,7 +14,7 @@ export const page = async (request, reply) => reply.view('pages/worksheet');
 export const list = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return reply.view('partials/shared/please-login');
+    return reply.status(401).view('partials/shared/please-login');
   }
 
   const {period, sorting} = request.query;

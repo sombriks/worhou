@@ -6,4 +6,5 @@ include ../../components/shared/key-val
     .is-flex.is-justify-content-center(x-data)
         +message('Timelog details', 'is-info', true,{"@click": "$el.closest('.modal').remove()"})
             +key-val('Clock time', format(timelog.stamp, 'yyyy-MM-dd HH:mm'))
-            +key-val('Created by')
+            +key-val('Created by', timelog.creator ? timelog.creator.name : undefined)
+            +key-val('Replacing', timelog.replaced ? `#${timelog.replaced.id}` : undefined)

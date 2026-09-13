@@ -1,5 +1,6 @@
 import {emailAccountCreate, emailAccountExists, emailAccountLogin} from '#services/login-email.js';
 import {getOrCreate} from '#services/login-device.js';
+import {getOrCreateUserSettings} from '#services/settings.js';
 
 /**
  @param {import('fastify').FastifyRequest} request
@@ -14,10 +15,12 @@ export const page = async (request, reply) => reply.view('pages/profile');
 export const me = async (request, reply) => {
   const {user} = request;
   if (!user) {
-    return reply.view('partials/profile/unlogged');
+    return reply.status(401).view('partials/profile/unlogged');
   }
 
-  return reply.view('partials/profile/me');
+  const userSettings = await getOrCreateUserSettings(user);
+
+  return reply.view('partials/profile/me', {userSettings});
 };
 
 /**
