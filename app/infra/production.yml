@@ -1,0 +1,51 @@
+---
+x-app: &app
+  image: sombriks/worhou:latest
+  restart: unless-stopped
+  environment:
+    DB_PASSWORD: ${DB_PASSWORD:-worhou}
+    DB_USER: ${DB_USER:-worhou}
+    NODE_ENV: production
+    PORT: ${PORT:-3000}
+    DB_HOST: db
+  healthcheck:
+    test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:$$PORT/ || exit 1" ]
+    start_period: 5s
+    interval: 30s
+    timeout: 5s
+  depends_on:
+    db:
+      condition: service_healthy
+name: worhou
+services:
+  app1:
+    <<: *app
+    ports:
+      - "3010:${PORT:-3000}"
+  app2:
+    <<: *app
+    ports:
+      - "3011:${PORT:-3000}"
+  app3:
+    <<: *app
+    ports:
+      - "3012:${PORT:-3000}"
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-worhou}
+      POSTGRES_USER: ${DB_USER:-worhou}
+      POSTGRES_DB: ${DB_USER:-worhou}
+    volumes:
+      - type: bind
+        source: ${PG_DATA:-../../pg-data}
+        target: /var/lib/postgresql
+        bind:
+          selinux: z
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      start_period: 5s
+      interval: 10s
+      timeout: 5s
+      retries: 5

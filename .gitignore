@@ -146,6 +146,9 @@ vite.config.ts.timestamp-*
 .idea
 .run
 .junie
+
+# general
 .nvmrc
 db.sqlite3
 .coverage
+pg-data

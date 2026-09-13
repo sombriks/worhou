@@ -27,6 +27,9 @@ Working hours sample app
     - ava
     - c8
     - xo
+- Production infrastructure
+    - podman compose
+    - caddy
 
 ### Initial project setup:
 
@@ -82,6 +85,7 @@ DB_PORT=5432
 PORT=3000
 AUTH_KEY=
 AUTH_EXPIRES_IN=1d
+PG_DATA=../../pg-data
 ```
 
 ## How to test
@@ -123,6 +127,28 @@ Then go to `app/migrations/common` directory and work on the generated template,
 using the [knex schema][knex-schema] api to evolve the database.
 
 [knex-schema]: https://knexjs.org/guide/schema-builder.html
+
+## How to build the container image
+
+Use either docker or podman:
+
+```bash
+# docker build -f app/infra/Dockerfile -t sombriks/worhou:latest .
+podman build -f app/infra/Dockerfile -t sombriks/worhou:latest .
+```
+
+## How to run it with podman compose + caddy
+
+First, install and configure caddy in the server.
+
+Next, run the setup script to configure caddy, cron and podman.
+
+The production compose can be tested like this:
+
+```bash
+docker compose --env-file=.env -f app/infra/production.yml up
+#podman compose --env-file=.env -f app/infra/production.yml up
+```
 
 ## Planned features
 
