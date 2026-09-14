@@ -163,15 +163,21 @@ podman compose --env-file=.env -f app/infra/production.yml up
 
 ## Noteworthy
 
-- I am getting old, there is no need to nodemon, Node.js now has a watch mode.
+- I am getting old, there is no need to install [nodemon][nodemon], Node.js now
+  has a watch mode.
 - Fastify [inject][fastify-inject] makes testing pretty neat.
 - [Locality Of Behavior][lob] first, Single [Responsibility Principle][srp]
   when there are too many concerns.
 - [Subpath patterns][subpath] are cool.
-- Mind the app and database timezones. Save reference dates so nobody gets
-  wrong dates.
+- Mind the app and database timezones.
+- [Caddy][caddy] is easy and cool.
+- Not everything needs kubernetes. Sometimes a simple [compose][compose] file
+  does the job.
 
+[nodemon]: https://nodemon.io/
 [fastify-inject]: https://fastify.dev/docs/latest/Guides/Testing/
 [lob]: https://htmx.org/essays/locality-of-behaviour/
 [srp]: https://en.wikipedia.org/wiki/Single-responsibility_principle
 [subpath]: https://nodejs.org/api/packages.html#subpath-patterns
+[caddy]: https://caddyserver.com/
+[compose]: https://podman-desktop.io/docs/compose
