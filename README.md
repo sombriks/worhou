@@ -95,7 +95,7 @@ PG_DATA=../../pg-data
 npm run test
 ```
 
-### Lint and Format
+### Lint and format
 
 ```bash
 npm run lint
@@ -103,10 +103,10 @@ npm run lint
 
 ## How to run
 
-Case you don't have a database, spin one up with docker:
+If you don't have a database, spin-up one with docker or podman:
 
 ```bash
-# docker compose -f app/infra/database.yml up -d
+# docker compose -f app/infra/database.yml up
 npm run db:up
 ```
 
@@ -142,7 +142,18 @@ podman build -f app/infra/Dockerfile -t sombriks/worhou:latest .
 
 First, install and configure caddy in the server.
 
+```bash
+sudo dnf install caddy
+sudo systemctl enable caddy
+sudo service caddy start
+```
+
 Next, run the setup script to configure caddy, cron and podman.
+
+```bash
+chmod +x app/infra/setup.sh
+./app/infra/setup.sh
+```
 
 The production compose can be tested like this:
 
