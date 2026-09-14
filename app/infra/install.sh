@@ -1,13 +1,13 @@
 #!/bin/sh
 # this script is supposed to run on bare metal, at package.json level
 
-# check node
+# check caddy
 
 # check podman
-
-# check caddy
 
 # check .env file
 
 # check production compose file
+
+# check cron rule for pull-based update
 

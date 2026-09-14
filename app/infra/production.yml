@@ -1,13 +1,15 @@
 ---
 x-app: &app
-  image: sombriks/worhou:latest
+  image: sombriks/worhou:${VERSION:-latest}
   restart: unless-stopped
   environment:
+    VERSION: ${VERSION:-latest}
     DB_PASSWORD: ${DB_PASSWORD:-worhou}
     DB_USER: ${DB_USER:-worhou}
-    NODE_ENV: production
-    PORT: ${PORT:-3000}
     DB_HOST: db
+    NODE_ENV: production
+    HOST: ${HOST:-0.0.0.0}
+    PORT: ${PORT:-3000}
   healthcheck:
     test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:$$PORT/ || exit 1" ]
     start_period: 5s

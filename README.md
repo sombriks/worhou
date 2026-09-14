@@ -83,6 +83,7 @@ DB_USER=worhou
 DB_PASSWORD=
 DB_PORT=5432
 PORT=3000
+HOST=0.0.0.0
 AUTH_KEY=
 AUTH_EXPIRES_IN=1d
 PG_DATA=../../pg-data
@@ -146,8 +147,8 @@ Next, run the setup script to configure caddy, cron and podman.
 The production compose can be tested like this:
 
 ```bash
-docker compose --env-file=.env -f app/infra/production.yml up
-#podman compose --env-file=.env -f app/infra/production.yml up
+#docker compose --env-file=.env -f app/infra/production.yml up
+podman compose --env-file=.env -f app/infra/production.yml up
 ```
 
 ## Planned features
