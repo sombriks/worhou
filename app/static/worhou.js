@@ -1,3 +1,5 @@
+/* global alert */
+/* global document */
 /* global htmx */
 
 /**
@@ -82,8 +84,8 @@ class WorHou {
     globalThis.location.reload();
   }
 
-  async download(url, params) {
-    const queryString = new URLSearchParams(params).toString();
+  async download(url, parameters) {
+    const queryString = new URLSearchParams(parameters).toString();
     const downloadUrl = queryString ? `${url}?${queryString}` : url;
 
     try {
@@ -91,7 +93,7 @@ class WorHou {
         method: 'GET',
         headers: {
           Authorization: this.bearer,
-        }
+        },
       });
       if (!response.ok) {
         return alert('CSV failed');
@@ -104,13 +106,9 @@ class WorHou {
       a.href = blobUrl;
 
       const disposition = response.headers.get('Content-Disposition');
-      if (disposition?.includes('filename=')) {
-        a.download = disposition.split('filename=')[1].replace(/['"]/g, '');
-      } else {
-        a.download = '';
-      }
+      a.download = disposition?.includes('filename=') ? disposition.split('filename=', 2)[1].replaceAll(/["']/gv, '') : '';
 
-      document.body.appendChild(a);
+      document.body.append(a);
       a.click();
       a.remove();
       URL.revokeObjectURL(blobUrl);
@@ -131,11 +129,11 @@ htmx.registerExtension('hx-Authorization', {
   },
 });
 
-// polyfill
+// Polyfill
 function uuidGen() {
   return (typeof crypto !== 'undefined' && crypto.randomUUID)
     ? crypto.randomUUID()
-    : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replaceAll(/[xy]/gv, c => {
       const r = Math.random() * 16 | 0;
       const v = c === 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);

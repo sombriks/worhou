@@ -76,7 +76,9 @@
     "space": 2,
     "rules": {
       "new-cap": "off",
+      "no-alert": "off",
       "camelcase": "off",
+      "no-bitwise": "off",
       "guard-for-in": "off",
       "accessor-pairs": "off",
       "no-await-in-loop": "off",
@@ -87,6 +89,8 @@
       "n/prefer-global/process": "off",
       "unicorn/no-array-reduce": "off",
       "jsdoc/require-description": "off",
+      "unicorn/prefer-math-trunc": "off",
+      "@stylistic/no-mixed-operators": "off",
       "jsdoc/require-param-description": "off",
       "unicorn/consistent-boolean-name": "off",
       "regexp/prefer-named-capture-group": "off",

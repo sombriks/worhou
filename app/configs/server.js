@@ -118,7 +118,7 @@ const api = {
       },
       '/csv': {
         get: worksheet.csv,
-      }
+      },
     },
   },
 };

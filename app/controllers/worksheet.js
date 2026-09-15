@@ -40,6 +40,6 @@ export async function csv(request, reply) {
   const end = new Date();
   const start = period === 'lastMonth' ? subMonths(end, 1) : subWeeks(end, 1);
 
-  const csv = await getCsvFor(user, {start, end});
-  return reply.type('text/csv').send(csv);
+  const report = await getCsvFor(user, {start, end});
+  return reply.type('text/csv').send(report);
 }
