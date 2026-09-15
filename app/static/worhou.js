@@ -26,7 +26,7 @@ class WorHou {
         name: 'Stranger',
         token: null,
         visits: 0,
-        device: crypto.randomUUID(),
+        device: uuidGen(),
       };
       localStorage.setItem('user', JSON.stringify(this.#user));
     }
@@ -81,6 +81,44 @@ class WorHou {
     localStorage.setItem('user', JSON.stringify(this.#user));
     globalThis.location.reload();
   }
+
+  async download(url, params) {
+    const queryString = new URLSearchParams(params).toString();
+    const downloadUrl = queryString ? `${url}?${queryString}` : url;
+
+    try {
+      const response = await fetch(downloadUrl, {
+        method: 'GET',
+        headers: {
+          Authorization: this.bearer,
+        }
+      });
+      if (!response.ok) {
+        return alert('CSV failed');
+      }
+
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = blobUrl;
+
+      const disposition = response.headers.get('Content-Disposition');
+      if (disposition?.includes('filename=')) {
+        a.download = disposition.split('filename=')[1].replace(/['"]/g, '');
+      } else {
+        a.download = '';
+      }
+
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error(error);
+      alert('CSV failed');
+    }
+  }
 }
 
 // Request setup
@@ -92,3 +130,14 @@ htmx.registerExtension('hx-Authorization', {
     }
   },
 });
+
+// polyfill
+function uuidGen() {
+  return (typeof crypto !== 'undefined' && crypto.randomUUID)
+    ? crypto.randomUUID()
+    : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+}

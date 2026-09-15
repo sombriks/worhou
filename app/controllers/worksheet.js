@@ -1,5 +1,5 @@
 import {format, subMonths, subWeeks} from 'date-fns';
-import {getSheetFor} from '#services/worksheet.js';
+import {getCsvFor, getSheetFor} from '#services/worksheet.js';
 
 /**
  @param {import('fastify').FastifyRequest} request
@@ -25,3 +25,21 @@ export const list = async (request, reply) => {
     period, sorting, sheet, format,
   });
 };
+
+/**
+ @param {import('fastify').FastifyRequest} request
+ @param {import('fastify').FastifyReply} reply
+ */
+export async function csv(request, reply) {
+  const {user} = request;
+  if (!user) {
+    return reply.status(401).view('partials/shared/please-login');
+  }
+
+  const {period} = request.query;
+  const end = new Date();
+  const start = period === 'lastMonth' ? subMonths(end, 1) : subWeeks(end, 1);
+
+  const csv = await getCsvFor(user, {start, end});
+  return reply.type('text/csv').send(csv);
+}

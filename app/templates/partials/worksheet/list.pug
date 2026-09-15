@@ -11,13 +11,13 @@ include ../../components/shared/key-val
                 input(type="radio"
                     name="period"
                     value="lastMonth"
-                    checked=period === 'lastMonth' || period === undefined)/
+                    checked=period === 'lastMonth')/
                 i.mdi.mdi-calendar-month
             label.radio(title="Last week")
                 input(type="radio"
                     name="period"
                     value="lastWeek"
-                    checked=period === 'lastWeek')/
+                    checked=period === 'lastWeek' || period === undefined)/
                 i.mdi.mdi-calendar-week
         .sorting.radios
             label.radio(title="Sort ascending")
@@ -32,6 +32,9 @@ include ../../components/shared/key-val
                     value='dec'
                     checked=sorting === 'dec')/
                 i.mdi.mdi-arrow-down-bold
+    .field.is-grouped.is-grouped-right(x-data)
+        button.button.is-warning(
+            @click=`new WorHou().download('${base}/worksheet/csv',{period:'${period}'})`) Get CSV
     -
         let days = Object.keys(sheet)
         if (sorting === 'dec') days = days.reverse()

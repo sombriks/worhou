@@ -116,6 +116,9 @@ const api = {
       '/list': {
         get: worksheet.list,
       },
+      '/csv': {
+        get: worksheet.csv,
+      }
     },
   },
 };

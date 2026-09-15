@@ -59,3 +59,17 @@ export async function getSheetFor(user, filter) {
 
   return sheet;
 }
+
+/**
+ @param {{id:number}} user
+ @param {{start:Date,end:Date}} filter
+ */
+export async function getCsvFor(user, filter) {
+  const sheet = await getSheetFor(user, filter);
+  const heading = 'WorHou;\n\nDate;Periods;Total Time;\n';
+  const body = Object.entries(sheet).reduce((acc, [day, {periods, total}]) => {
+    acc += `${day};${periods.length};${total.hours}:${total.minutes}:${total.seconds}\n`;
+    return acc;
+  }, '');
+  return heading + body;
+}

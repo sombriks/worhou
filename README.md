@@ -168,7 +168,7 @@ podman compose --env-file=.env -f app/infra/production.yml up
 2. [X] simple device login
 3. [ ] simple email login
 4. [ ] timesheet configuration
-5. [ ] export reports
+5. [X] export reports (csv)
 6. [ ] cool graphics
 7. [ ] teams
 
