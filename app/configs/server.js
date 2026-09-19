@@ -87,6 +87,9 @@ const api = {
           get: profile.signupForm,
           post: profile.signup,
         },
+        '/challenge': {
+          post: profile.challengeAnswer,
+        },
       },
       '/device': {
         post: profile.signDevice,

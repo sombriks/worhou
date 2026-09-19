@@ -48,7 +48,7 @@ export async function getDetail(user, id) {
       .first();
   }
 
-  if (detail.creator_id) {
+  if (detail?.creator_id) {
     detail.creator = await database.db(Users._name)
       .where({[Users.id]: detail.creator_id})
       .first();

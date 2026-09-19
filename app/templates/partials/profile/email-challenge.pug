@@ -1,0 +1,20 @@
+include ../../components/shared/message
+include ../../components/shared/notification
+
+.challenge
+    +message('Login','is-primary')
+        if error
+            +notification('is-danger')
+                span= error
+        //- .title=`${userId} - ${email} - ${challenge}`
+        form(hx-post=`${base}/profile/email/challenge`,
+            hx-target="closest .challenge",
+            hx-swap="outerHTML"
+            hx-encoding="application/x-www-form-urlencoded")
+            input(type="hidden" name="userId" value=userId)/
+            .field
+                label.label 6-digit challenge sent to your email
+                .control
+                    input.input(type="text" name="challenge" placeholder="ex: 12AB3C" required)/
+            .field.is-grouped.is-grouped-right
+                input.button.is-primary(type="submit" value="Log In")/

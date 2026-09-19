@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import {promisify} from 'node:util';
+import {addMinutes} from 'date-fns';
 import jwt from 'jsonwebtoken';
 import auth from '#configs/auth.js';
 import database from '#configs/database.js';
@@ -70,4 +71,13 @@ export async function getUser(token) {
     console.warn('failed to extract user from token', error);
     return null;
   }
+}
+
+/**
+ @returns {{challenge: string, challenge_at: number|Date}} challenge details
+ */
+export function makeChallenge() {
+  const challenge = crypto.randomBytes(3).toString('hex').toUpperCase();
+  const challenge_at = addMinutes(Date.now(), 5);
+  return {challenge, challenge_at};
 }

@@ -4,7 +4,7 @@ mixin login()
     +message('Log In',"is-success")
         if block
             block
-        form(hx-put=`${base}/profile/login`,
+        form(hx-put=`${base}/profile/email/login`,
             hx-target="closest .message",
             hx-swap="outerHTML"
             hx-encoding="application/x-www-form-urlencoded")
@@ -21,6 +21,6 @@ mixin login()
             .field.is-grouped.is-grouped-left
                 span
                     | No account?
-                    a(hx-get=`${base}/profile/signup`
+                    a(hx-get=`${base}/profile/email/signup`
                         hx-target="closest .message"
                         hx-swap="outerHTML") create one

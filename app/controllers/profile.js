@@ -1,6 +1,9 @@
-import {emailAccountCreate, emailAccountExists, emailAccountLogin} from '#services/login-email.js';
+import {challengeCheck, emailAccountCreate, emailAccountExists, emailAccountLogin,} from '#services/login-email.js';
 import {getOrCreate} from '#services/login-device.js';
 import {getOrCreateUserSettings} from '#services/settings.js';
+import {sendEmailChallenge} from '#services/email.js';
+import database from '#configs/database.js';
+import {Users} from '#models/users.js';
 
 /**
  @param {import('fastify').FastifyRequest} request
@@ -41,12 +44,14 @@ export const loginForm = async (request, reply) => reply.view('partials/profile/
  */
 export const login = async (request, reply) => {
   const {email, password} = request.body;
-  const token = await emailAccountLogin({email, password});
-  if (!token) {
+  const result = await emailAccountLogin({email, password});
+  if (!result) {
     return reply.view('partials/profile/email-login', {error: 'Invalid email or password'});
   }
 
-  return reply.view('partials/profile/set-token', {token});
+  const user = await database.db(Users._name).where(Users.id, result.userId).first();
+  sendEmailChallenge({email, ...user, ...result});
+  return reply.view('partials/profile/email-challenge', {...result, email});
 };
 
 /**
@@ -59,14 +64,28 @@ export const signup = async (request, reply) => {
     return reply.view('partials/profile/email-signup', {error: 'Email already in use'});
   }
 
-  // TODO both login and signup must ask for a challenge
-  const token = await emailAccountCreate({name, email, password});
-  if (!token) {
+  const result = await emailAccountCreate({name, email, password});
+  if (!result) {
     return reply.view('partials/profile/signup.pug', {error: 'Account creation failed'});
   }
 
-  return reply.view('partials/profile/set-token', {token});
+  sendEmailChallenge({email, name, ...result});
+  return reply.view('partials/profile/email-challenge', {...result, email});
 };
+
+/**
+ @param {import('fastify').FastifyRequest} request
+ @param {import('fastify').FastifyReply} reply
+ */
+export async function challengeAnswer(request, reply) {
+  const {userId, challenge} = request.body;
+  const token = await challengeCheck(userId, challenge);
+  if (!token) {
+    return reply.view('partials/profile/email-challenge', {userId, error: 'Challenge invalid or expired'});
+  }
+
+  return reply.view('partials/profile/set-token', {token});
+}
 
 /**
  @param {import('fastify').FastifyRequest} request

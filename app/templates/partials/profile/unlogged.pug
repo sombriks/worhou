@@ -1,12 +1,12 @@
-.is-flex.is-flex-direction-column.is-gap-2.m-2.unlogged(x-data)
+.unlogged.is-flex.is-flex-direction-column.is-gap-2.m-2(x-data)
     .title Select a login method
     button.button(hx-post=`${base}/profile/device` hx-vals="js:{device:new WorHou().device}") Device login/signup
-    button.button(disabled) Email login
+    button.button(hx-get=`${base}/profile/email/login` hx-target=".unlogged") Email login
     button.button(disabled) Social login
     .is-flex.is-gap-2.m-2.is-justify-content-space-between
         hr.is-flex-grow-1.has-background-info
         .subtitle or
         hr.is-flex-grow-1.has-background-info
-    button.button(disabled) Email signup
+    button.button(hx-get=`${base}/profile/email/signup` hx-target=".unlogged") Email signup
     button.button(disabled) Social signup
 

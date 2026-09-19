@@ -4,7 +4,7 @@ mixin signup()
     +message('Sign up', 'is-info')
         if block
             block
-        form(hx-post=`${base}/profile/signup`,
+        form(hx-post=`${base}/profile/email/signup`,
             hx-target="closest .message",
             hx-swap="outerHTML"
             hx-encoding="application/x-www-form-urlencoded")
@@ -25,7 +25,7 @@ mixin signup()
             .field.is-grouped.is-grouped-left
                 span
                     | Have an account?
-                    a(hx-get=`${base}/profile/login`
+                    a(hx-get=`${base}/profile/email/login`
                         hx-target="closest .message"
                         hx-swap="outerHTML") sign in
 
