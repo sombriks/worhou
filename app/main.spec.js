@@ -103,7 +103,7 @@ test.serial('should login using email', async t => {
   t.regex(welcome.body, /test/iv);
 });
 
-test('should create user, save timelog and list result', async t => {
+test.serial('should create user, save timelog and list result', async t => {
   const email = `timelog-${Date.now()}@example.com`;
 
   const signupResponse = await fastify.inject({
@@ -179,7 +179,7 @@ test.serial('should get worksheet for test user with registered hours', async t 
   t.regex(worksheetResponse.body, /\d{2}:\d{2} - \d{2}:\d{2}/v);
 });
 
-test('should login using device', async t => {
+test.serial('should login using device', async t => {
   const device = crypto.randomUUID();
   const response = await fastify.inject({
     method: 'POST',
@@ -241,7 +241,7 @@ test.serial('should login using device, save timelog and visit timelog detail', 
   t.regex(detailResponse.body, /created by/iv);
 });
 
-test('should login using device, save timelog and update it', async t => {
+test.serial('should login using device, save timelog and update it', async t => {
   const device = crypto.randomUUID();
 
   const loginResponse = await fastify.inject({
@@ -322,7 +322,7 @@ test('should login using device, save timelog and update it', async t => {
   t.regex(detailResponse.body, new RegExp(`#${originalTimelog.id}`, 'v'));
 });
 
-test('should login using device, save timelogs and download worksheet csv', async t => {
+test.serial('should login using device, save timelogs and download worksheet csv', async t => {
   const device = crypto.randomUUID();
 
   const loginResponse = await fastify.inject({
