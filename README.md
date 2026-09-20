@@ -11,25 +11,26 @@ Working hours sample app
 ## Tech stack
 
 - Runtimes
-    - docker 29 (or podman 5.8)
-    - node 24
-    - postgres 18
+  - docker 29 (or podman 5.8)
+  - node 24
+  - postgres 18
 - Frameworks
-    - knex
-    - fastify
-    - pug
-    - htmx
+  - knex
+  - fastify
+  - pug
+  - htmx
+  - bulma
+  - date-fns
   - alpine.js
-    - bulma
-    - date-fns
 - Test & Lint frameworks
-    - testcontainers
-    - ava
-    - c8
-    - xo
+  - testcontainers
+  - ava
+  - c8
+  - xo
 - Production infrastructure
-    - podman compose
-    - caddy
+  - podman compose
+  - mailjet
+  - caddy
 
 ### Initial project setup:
 
