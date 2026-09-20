@@ -89,11 +89,18 @@ if [ ! -f ".env" ]; then
     info "No .env file found. Creating a baseline configuration with default values..."
     cat << 'EOF' > .env
 VERSION=latest
-DB_PASSWORD=worhou
+NODE_ENV=production
 DB_USER=worhou
+DB_PASSWORD=worhou
+DB_PORT=5432
 PG_DATA=../../pg-data
 PORT=3000
 HOST=0.0.0.0
+AUTH_KEY=
+AUTH_EXPIRES_IN=1d
+EMAIL_API_URL=
+EMAIL_API_USERNAME=
+EMAIL_API_PASSWORD=
 EOF
     success ".env file generated successfully."
 else
@@ -119,10 +126,10 @@ success "Compose file syntax is valid."
 # 5. Check Cron Rule for Pull-Based Update
 # ------------------------------------------------------------------
 info "Configuring pull-based automation via User Crontab..."
-FETCHSH=$(pwd)/app/infra/fetch.sh
-chmod +x $FETCHSH
+FETCH_SH=$(pwd)/app/infra/fetch.sh
+chmod +x $FETCH_SH
 # Define the cron schedule and command explicitly utilizing 'podman compose'
-CRON_RULE="*/15 * * * * $FETCHSH"
+CRON_RULE="*/15 * * * * $FETCH_SH"
 
 # Extract existing crontab contents safely
 EXISTING_CRON=$(crontab -l 2>/dev/null || true)

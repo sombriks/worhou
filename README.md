@@ -78,16 +78,17 @@ touch app/templates/index.pug
 ## Environment variables
 
 ```bash
+VERSION=latest
 NODE_ENV=development
 BASE_URL=
 DB_USER=worhou
 DB_PASSWORD=
 DB_PORT=5432
+PG_DATA=../../pg-data
 PORT=3000
 HOST=0.0.0.0
 AUTH_KEY=
 AUTH_EXPIRES_IN=1d
-PG_DATA=../../pg-data
 EMAIL_API_URL=
 EMAIL_API_USERNAME=
 EMAIL_API_PASSWORD=
