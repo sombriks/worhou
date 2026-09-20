@@ -169,11 +169,13 @@ podman compose --env-file=.env -f app/infra/production.yml up
 
 1. [X] basic clock in / clock out
 2. [X] simple device login
-3. [ ] simple email login
+3. [X] simple email login
 4. [ ] timesheet configuration
 5. [X] export reports (csv)
-6. [ ] cool graphics
+6. [ ] cool graphics and stats
 7. [ ] teams
+8. [ ] publish (address coming soon)
+9. [ ] social login
 
 ## Noteworthy
 
@@ -187,6 +189,7 @@ podman compose --env-file=.env -f app/infra/production.yml up
 - [Caddy][caddy] is easy and cool.
 - Not everything needs kubernetes. Sometimes a simple [compose][compose] file
   does the job.
+- Kudos to [mailjet][mailjet], quise simple setup.
 
 [nodemon]: https://nodemon.io/
 [fastify-inject]: https://fastify.dev/docs/latest/Guides/Testing/
@@ -195,3 +198,4 @@ podman compose --env-file=.env -f app/infra/production.yml up
 [subpath]: https://nodejs.org/api/packages.html#subpath-patterns
 [caddy]: https://caddyserver.com/
 [compose]: https://podman-desktop.io/docs/compose
+[mailjet]: https://www.mailjet.com/

@@ -1,5 +1,7 @@
 #!/bin/sh
 set -e
+# Export minimal canonical path
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:~/bin:~/.local/bin
 
 # Clear visual anchors
 info() { echo "ℹ️ [INFO] $1"; }
@@ -30,6 +32,6 @@ info "Building new local Podman image..."
 podman build -f app/infra/Dockerfile -t sombriks/worhou:latest .
 
 info "Updating production compose stack..."
-podman compose -f app/infra/production.yml up -d
+podman compose --env-file=.env -f app/infra/production.yml up -d
 
 success "Deployment completed successfully with latest Git commit."
