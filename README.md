@@ -19,7 +19,7 @@ Working hours sample app
     - fastify
     - pug
     - htmx
-  - alpinejs
+  - alpine.js
     - bulma
     - date-fns
 - Test & Lint frameworks
