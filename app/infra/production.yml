@@ -6,10 +6,15 @@ x-app: &app
     VERSION: ${VERSION:-latest}
     DB_PASSWORD: ${DB_PASSWORD:-worhou}
     DB_USER: ${DB_USER:-worhou}
-    DB_HOST: db
-    NODE_ENV: production
+    DB_HOST: ${DB_HOST:-db}
+    NODE_ENV: ${NODE_ENV:-production}
     HOST: ${HOST:-0.0.0.0}
     PORT: ${PORT:-3000}
+    AUTH_KEY: ${AUTH_KEY}
+    AUTH_EXPIRES_IN: ${AUTH_EXPIRES_IN:-1d}
+    EMAIL_API_URL: ${EMAIL_API_URL}
+    EMAIL_API_USERNAME: ${EMAIL_API_USERNAME}
+    EMAIL_API_PASSWORD: ${EMAIL_API_PASSWORD}
   healthcheck:
     test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:$$PORT/ || exit 1" ]
     start_period: 5s
