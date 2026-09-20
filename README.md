@@ -6,7 +6,7 @@
 [workflow]: https://github.com/sombriks/worhou/actions/workflows/test.yml
 [repo]: https://github.com/sombriks/worhou
 
-Working hours sample app
+[Working hours sample app][app]
 
 ## Tech stack
 
@@ -83,6 +83,7 @@ NODE_ENV=development
 BASE_URL=
 DB_USER=worhou
 DB_PASSWORD=
+DB_HOST=
 DB_PORT=5432
 PG_DATA=../../pg-data
 PORT=3000
@@ -176,8 +177,9 @@ podman compose --env-file=.env -f app/infra/production.yml up
 5. [X] export reports (csv)
 6. [ ] cool graphics and stats
 7. [ ] teams
-8. [ ] publish (address coming soon)
+8. [X] publish ([worhou.getsheetdone.net][app])
 9. [ ] social login
+10. [ ] support user timezone
 
 ## Noteworthy
 
@@ -201,3 +203,4 @@ podman compose --env-file=.env -f app/infra/production.yml up
 [caddy]: https://caddyserver.com/
 [compose]: https://podman-desktop.io/docs/compose
 [mailjet]: https://www.mailjet.com/
+[app]: https://worhou.getsheetdone.net/
