@@ -11,9 +11,9 @@ Working hours sample app
 ## Tech stack
 
 - Runtimes
-  - docker 29 (or podman 5.8)
-  - node 24
-  - postgres 18
+    - docker 29 (or podman 5.8)
+    - node 24
+    - postgres 18
 - Frameworks
     - knex
     - fastify
