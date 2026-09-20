@@ -44,7 +44,7 @@ services:
         source: ${PG_DATA:-../../pg-data}
         target: /var/lib/postgresql
         bind:
-          selinux: z
+          selinux: Z
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       start_period: 5s
