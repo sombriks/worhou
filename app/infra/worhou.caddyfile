@@ -2,7 +2,7 @@
 worhou.getsheetdone.net {
     reverse_proxy localhost:3010 localhost:3011 localhost:3012 {
         lb_policy round_robin
-        fail_timeout 10s
+        fail_duration 10s
         max_fails 3
     }
 }
