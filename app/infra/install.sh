@@ -39,13 +39,13 @@ else
 fi
 
 # Validate if worhou.caddy is present under /etc/caddy/Caddyfile.d
-CADDY_CONF_TARGET="/etc/caddy/Caddyfile.d/worhou.caddy"
+CADDY_CONF_TARGET="/etc/caddy/Caddyfile.d/worhou.caddyfile"
 info "Checking for $CADDY_CONF_TARGET..."
 
 if [ ! -f "$CADDY_CONF_TARGET" ]; then
     CADDY_CONF_SOURCE="worhou.caddy"
-    if [ ! -f "$CADDY_CONF_SOURCE" ] && [ -f "app/infra/worhou.caddy" ]; then
-        CADDY_CONF_SOURCE="app/infra/worhou.caddy"
+    if [ ! -f "$CADDY_CONF_SOURCE" ] && [ -f "app/infra/worhou.caddyfile" ]; then
+        CADDY_CONF_SOURCE="app/infra/worhou.caddyfile"
     fi
 
     info "Caddy configuration for worhou is missing at target destination."
@@ -56,6 +56,9 @@ if [ ! -f "$CADDY_CONF_TARGET" ]; then
 else
     success "worhou.caddy found and active under /etc/caddy/Caddyfile.d."
 fi
+
+info "Checking caddy configuration..."
+caddy validate --config /etc/caddy/Caddyfile
 
 # ------------------------------------------------------------------
 # 2. Check Podman
