@@ -130,19 +130,35 @@ success "Compose file syntax is valid."
 # ------------------------------------------------------------------
 info "Configuring pull-based automation via User Crontab..."
 FETCH_SH=$(pwd)/app/infra/fetch.sh
-chmod +x $FETCH_SH
-# Define the cron schedule and command explicitly utilizing 'podman compose'
+chmod +x "$FETCH_SH"
+
+# Define o agendamento do cron
 CRON_RULE="*/15 * * * * $FETCH_SH"
 
-# Extract existing crontab contents safely
-EXISTING_CRON=$(crontab -l 2>/dev/null || true)
+# Captura o crontab atual com segurança. Se não existir, retorna vazio sem gerar erro.
+EXISTING_CRON=$(crontab -l 2>/dev/null || echo "")
 
-if echo "$EXISTING_CRON" | grep -Fq "$FETCHSH"; then
+# CORRIGIDO: Agora usa a variável correta $FETCH_SH com o underline
+if echo "$EXISTING_CRON" | grep -Fq "$FETCH_SH"; then
     success "A cron automatic update rule already exists for this directory path."
 else
     info "Injecting the automated pull/up routine into your crontab..."
-    (echo "$EXISTING_CRON"; echo "$CRON_RULE") | crontab -
-    success "Automated pull crontab task successfully installed!"
+
+    # Tenta injetar dinamicamente removendo linhas em branco iniciais
+    if (echo "$EXISTING_CRON"; echo "$CRON_RULE") | sed '/^$/d' | crontab - 2>/dev/null; then
+        success "Automated pull crontab task successfully installed!"
+    else
+        # Se falhar (por restrições de permissão do sistema ou ambiente), mostra o passo a passo:
+        echo ""
+        echo "❌ [ERROR] Could not automatically update your crontab."
+        echo "👉 Please follow these steps to configure it manually:"
+        echo "   1. Run the command: crontab -e"
+        echo "   2. Paste the following line at the very bottom of the file:"
+        echo "      $CRON_RULE"
+        echo "   3. Save and close the editor."
+        echo ""
+        error "Manual crontab configuration required."
+    fi
 fi
 
 echo "----------------------------------------------------------------"
