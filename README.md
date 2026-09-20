@@ -20,7 +20,6 @@ Working hours sample app
     - pug
     - htmx
     - bulma
-  - alpinejs
     - date-fns
 - Test & Lint frameworks
     - testcontainers
