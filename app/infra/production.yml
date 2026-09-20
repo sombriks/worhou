@@ -16,7 +16,7 @@ x-app: &app
     EMAIL_API_USERNAME: ${EMAIL_API_USERNAME}
     EMAIL_API_PASSWORD: ${EMAIL_API_PASSWORD}
   healthcheck:
-    test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:$$PORT/ || exit 1" ]
+    test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:$PORT/ || exit 1" ]
     start_period: 5s
     interval: 30s
     timeout: 5s
