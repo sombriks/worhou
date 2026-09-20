@@ -133,7 +133,7 @@ FETCH_SH=$(pwd)/app/infra/fetch.sh
 chmod +x "$FETCH_SH"
 
 # Define o agendamento do cron
-CRON_RULE="*/15 * * * * $FETCH_SH"
+CRON_RULE="*/15 * * * * $FETCH_SH 2>&1 | logger -t cron-worhou"
 
 # Captura o crontab atual com segurança. Se não existir, retorna vazio sem gerar erro.
 EXISTING_CRON=$(crontab -l 2>/dev/null || echo "")
