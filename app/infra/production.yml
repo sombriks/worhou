@@ -45,11 +45,7 @@ services:
       POSTGRES_USER: ${DB_USER:-worhou}
       POSTGRES_DB: ${DB_USER:-worhou}
     volumes:
-      - type: bind
-        source: ${PG_DATA:-../../pg-data}
-        target: /var/lib/postgresql
-        bind:
-          selinux: Z
+      - ${PG_DATA:-../../pg-data}:/var/lib/postgresql:Z,U
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       start_period: 5s
