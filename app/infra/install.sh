@@ -130,25 +130,18 @@ success "Compose file syntax is valid."
 # ------------------------------------------------------------------
 info "Configuring pull-based automation via User Crontab..."
 FETCH_SH=$(pwd)/app/infra/fetch.sh
-chmod +x "$FETCH_SH"
 
-# Define o agendamento do cron
 CRON_RULE="*/15 * * * * $FETCH_SH 2>&1 | logger -t cron-worhou"
-
-# Captura o crontab atual com segurança. Se não existir, retorna vazio sem gerar erro.
 EXISTING_CRON=$(crontab -l 2>/dev/null || echo "")
 
-# CORRIGIDO: Agora usa a variável correta $FETCH_SH com o underline
 if echo "$EXISTING_CRON" | grep -Fq "$FETCH_SH"; then
     success "A cron automatic update rule already exists for this directory path."
 else
     info "Injecting the automated pull/up routine into your crontab..."
 
-    # Tenta injetar dinamicamente removendo linhas em branco iniciais
     if (echo "$EXISTING_CRON"; echo "$CRON_RULE") | sed '/^$/d' | crontab - 2>/dev/null; then
         success "Automated pull crontab task successfully installed!"
     else
-        # Se falhar (por restrições de permissão do sistema ou ambiente), mostra o passo a passo:
         echo ""
         echo "❌ [ERROR] Could not automatically update your crontab."
         echo "👉 Please follow these steps to configure it manually:"
@@ -161,6 +154,40 @@ else
     fi
 fi
 
+# ------------------------------------------------------------------
+# 6. Configure Systemd User Service for Autostart
+# ------------------------------------------------------------------
+info "Configuring systemd rootless user service..."
+SYSTEMD_USER_DIR="$HOME/.config/systemd/user"
+mkdir -p "$SYSTEMD_USER_DIR"
+CURRENT_ROOT=$(pwd)
+
+cat << EOF > "$SYSTEMD_USER_DIR/worhou.service"
+[Unit]
+Description=Podman Compose WorHou
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=$CURRENT_ROOT
+Environment=PATH=/usr/bin:/usr/local/bin:/usr/sbin:/sbin
+
+ExecStart=/usr/bin/podman-compose --env-file=.env -f app/infra/production.yml up -d
+ExecStop=/usr/bin/podman-compose -f app/infra/production.yml down
+
+[Install]
+WantedBy=default.target
+EOF
+
+info "Reloading user systemd daemon and enabling service..."
+systemctl --user daemon-reload
+systemctl --user enable worhou.service
+
+success "Systemd user service 'worhou.service' successfully installed and enabled for startup!"
+
+
 echo "----------------------------------------------------------------"
 success "All pre-flight checks passed! Your production stack is ready."
 info "You can now run: podman compose up -d"
+
