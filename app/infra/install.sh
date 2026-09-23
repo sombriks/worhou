@@ -188,6 +188,6 @@ success "Systemd user service 'worhou.service' successfully installed and enable
 
 
 echo "----------------------------------------------------------------"
+success " "
 success "All pre-flight checks passed! Your production stack is ready."
-info "You can now run: podman compose up -d"
-
+success " "
